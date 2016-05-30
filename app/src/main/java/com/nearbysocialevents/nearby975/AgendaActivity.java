@@ -1,9 +1,9 @@
-package com.nearbysocialevents.nearby;
+package com.nearbysocialevents.nearby975;
 
 import android.app.Activity;
 import android.os.Bundle;
 import android.widget.ListView;
-
+import com.nearbysocialevents.nearby975.Evento;
 import java.util.ArrayList;
 import java.util.Date;
 

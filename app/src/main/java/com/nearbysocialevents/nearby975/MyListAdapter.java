@@ -1,4 +1,4 @@
-package com.nearbysocialevents.nearby;
+package com.nearbysocialevents.nearby975;
 
 import android.content.Context;
 import android.view.LayoutInflater;

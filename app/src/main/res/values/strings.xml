@@ -1,3 +1,18 @@
 <resources>
     <string name="app_name">Nearby975</string>
+
+
+    <string-array
+        name="array_sexo">
+        <item>Masculino</item>
+        <item>Feminino</item>
+    </string-array>
+
+    <string-array
+        name="array_categoria_evento">
+        <item>Masculino</item>
+        <item>Feminino</item>
+    </string-array>
+
+
 </resources>
