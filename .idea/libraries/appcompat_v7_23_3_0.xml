@@ -1,0 +1,12 @@
+<component name="libraryTable">
+  <library name="appcompat-v7-23.3.0">
+    <CLASSES>
+      <root url="file:///net/nfs1.fee.unicamp.br/export/vol1/home/EC11/ra119555/NearbySocialEvents/NearbySocialEvents/Nearby975/app/build/intermediates/exploded-aar/com.android.support/appcompat-v7/23.3.0/res" />
+      <root url="jar:///net/nfs1.fee.unicamp.br/export/vol1/home/EC11/ra119555/NearbySocialEvents/NearbySocialEvents/Nearby975/app/build/intermediates/exploded-aar/com.android.support/appcompat-v7/23.3.0/jars/classes.jar!/" />
+    </CLASSES>
+    <JAVADOC />
+    <SOURCES>
+      <root url="jar:///opt/android-sdk-linux/extras/android/m2repository/com/android/support/appcompat-v7/23.3.0/appcompat-v7-23.3.0-sources.jar!/" />
+    </SOURCES>
+  </library>
+</component>
