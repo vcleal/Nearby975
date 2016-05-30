@@ -2,8 +2,8 @@
 <project version="4">
   <component name="ProjectModuleManager">
     <modules>
-      <module fileurl="file:///net/nfs1.fee.unicamp.br/export/vol1/home/EC11/ra119555/NearbySocialEvents/NearbySocialEvents/Nearby975/Nearby975.iml" filepath="/net/nfs1.fee.unicamp.br/export/vol1/home/EC11/ra119555/NearbySocialEvents/NearbySocialEvents/Nearby975/Nearby975.iml" />
-      <module fileurl="file:///net/nfs1.fee.unicamp.br/export/vol1/home/EC11/ra119555/NearbySocialEvents/NearbySocialEvents/Nearby975/app/app.iml" filepath="/net/nfs1.fee.unicamp.br/export/vol1/home/EC11/ra119555/NearbySocialEvents/NearbySocialEvents/Nearby975/app/app.iml" />
+      <module fileurl="file:///net/nfs1.fee.unicamp.br/export/vol1/home/EC11/ra119555/nearby2/Nearby975/Nearby975.iml" filepath="/net/nfs1.fee.unicamp.br/export/vol1/home/EC11/ra119555/nearby2/Nearby975/Nearby975.iml" />
+      <module fileurl="file:///net/nfs1.fee.unicamp.br/export/vol1/home/EC11/ra119555/nearby2/Nearby975/app/app.iml" filepath="/net/nfs1.fee.unicamp.br/export/vol1/home/EC11/ra119555/nearby2/Nearby975/app/app.iml" />
     </modules>
   </component>
 </project>

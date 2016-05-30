@@ -8,14 +8,14 @@
         <option name="gradleHome" value="$APPLICATION_HOME_DIR$/gradle/gradle-2.10" />
         <option name="modules">
           <set>
-            <option value="/net/nfs1.fee.unicamp.br/export/vol1/home/EC11/ra119555/NearbySocialEvents/NearbySocialEvents/Nearby975" />
-            <option value="/net/nfs1.fee.unicamp.br/export/vol1/home/EC11/ra119555/NearbySocialEvents/NearbySocialEvents/Nearby975/app" />
+            <option value="/net/nfs1.fee.unicamp.br/export/vol1/home/EC11/ra119555/nearby2/Nearby975" />
+            <option value="/net/nfs1.fee.unicamp.br/export/vol1/home/EC11/ra119555/nearby2/Nearby975/app" />
           </set>
         </option>
         <option name="myModules">
           <set>
-            <option value="/net/nfs1.fee.unicamp.br/export/vol1/home/EC11/ra119555/NearbySocialEvents/NearbySocialEvents/Nearby975" />
-            <option value="/net/nfs1.fee.unicamp.br/export/vol1/home/EC11/ra119555/NearbySocialEvents/NearbySocialEvents/Nearby975/app" />
+            <option value="/net/nfs1.fee.unicamp.br/export/vol1/home/EC11/ra119555/nearby2/Nearby975" />
+            <option value="/net/nfs1.fee.unicamp.br/export/vol1/home/EC11/ra119555/nearby2/Nearby975/app" />
           </set>
         </option>
       </GradleProjectSettings>
