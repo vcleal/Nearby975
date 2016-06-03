@@ -8,10 +8,10 @@
         android:layout_marginTop="30dp"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
-        android:text="EULA"
+        android:text="Chat da Festa Feliz"
         android:textSize="20dp"
         android:textColor="@color/colorPreto"
-        android:id="@+id/textView5"
+        android:id="@+id/titulo_chat"
         android:layout_gravity="center_horizontal" />
 
     <ScrollView
@@ -20,7 +20,7 @@
         android:layout_marginTop="10dp"
         android:layout_marginBottom="7dp"
         android:layout_width="match_parent"
-        android:layout_height="wrap_content"
+        android:layout_height="match_parent"
         android:id="@+id/scrollView4"
         android:layout_gravity="center_horizontal"
 
@@ -42,32 +42,15 @@
                 android:layout_width="match_parent"
                 android:layout_height="wrap_content"
                 android:layout_margin="10dp"
-                android:text="Copyright [2016] [Grupo OPEN]
-
-Licensed under the Apache License, Version 2.0 (the &quot;License&quot; );
-you may not use this file except in compliance with the License.
-You may obtain a copy of the License at
-
-    http://www.apache.org/licenses/LICENSE-2.0
-
-Unless required by applicable law or agreed to in writing, software
-distributed under the License is distributed on an  &quot;AS IS&quot;  BASIS,
-WITHOUT WARRANTIES OR CONDITIONS OF ANY KIND, either express or implied.
-See the License for the specific language governing permissions and
-limitations under the License."
+                android:text="BláBláBláBláBláBláBláBláBláBláBláBláBláBlá
+                BláBláBláBláBláBláBláBláBláBláBláBláBláBláBláBláBláBláBláBláBláBláBláBláBláBláBláBlá
+                BláBláBláBláBláBláBláBláBláBláBláBláBláBláBláBláBláBláBláBláBláBláBláBláBláBláBláBlá
+                BláBláBláBláBláBláBláBláBláBláBláBláBláBláBláBláBláBláBláBláBláBláBláBláBláBláBláBlá"
                 android:textColor="@color/colorPreto"
-                android:id="@+id/EULAtext" />
+                android:id="@+id/corpo_chat" />
 
         </LinearLayout>
     </ScrollView>
-
-    <Button
-        android:layout_marginTop="10dp"
-        android:layout_width="wrap_content"
-        android:layout_height="38dp"
-        android:text="Não li e aceito"
-        android:id="@+id/EULAbotão"
-        android:layout_gravity="center_horizontal" />
 
 
 </LinearLayout>
