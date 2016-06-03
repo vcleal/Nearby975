@@ -3,7 +3,7 @@
     <color name="colorPrimary">#3F51B5</color>
     <color name="colorPrimaryDark">#303F9F</color>
     <color name="colorAccent">#FF4081</color>
-    <color name="colorBranco">#FF4081</color>
-    <color name="cinzabackground">#FF4081</color>
+    <color name="colorBranco">#FFFFFF</color>
+    <color name="cinzabackground">#FFFFFF</color>
 
 </resources>
