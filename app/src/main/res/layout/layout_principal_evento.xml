@@ -123,6 +123,13 @@
                     android:text="Gerenciar"
                     android:id="@+id/button_gerenciar"
                     android:layout_gravity="center_horizontal" />
+                <Button
+                    android:layout_width="100dp"
+                    android:layout_height="wrap_content"
+                    android:layout_margin="5dp"
+                    android:text="Enviar Ingresso"
+                    android:id="@+id/button_enviar"
+                    android:layout_gravity="center_horizontal" />
 
             </LinearLayout>
 
