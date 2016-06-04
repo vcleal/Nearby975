@@ -3,18 +3,83 @@ package com.nearbysocialevents.nearby975;
 import android.app.Activity;
 
 import android.content.Intent;
+import android.content.SharedPreferences;
 import android.os.Bundle;
+import android.view.View;
+import android.widget.Button;
 import android.widget.EditText;
 
 public class MainActivity extends Activity {
+/*    Button buttonAgenda;
+    Button buttonMercado;
+    Button buttonMeusEventos;
+    Button buttonCriarEvento;
+    Button buttonBuscarEventos;
+    Button buttonContatos;
+    Button buttonLogout;
+*/
+
+    private Button buttonLogin;
+    private Button buttonCriarConta;
+    public static final String MY_PREFS_NAME = "LoginInfo";
+    private boolean isLogged;
+
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
-        setContentView(R.layout.activity_tela_principal);
+        setContentView(R.layout.layout_ecra_salpico);
 
-        Intent intent = new Intent(this, ActivityValidarIngresso.class);
-        startActivity(intent);
+        SharedPreferences prefs = getSharedPreferences(MY_PREFS_NAME, MODE_PRIVATE);
+        isLogged = prefs.getBoolean("logged",false);
+        if(isLogged){
+            Intent intent = new Intent(this, ActivityTelaPrincipal.class);
+            startActivity(intent);
+
+        }else{
+
+            buttonLogin = (Button) findViewById(R.id.button_abrir_login);
+            buttonCriarConta = (Button) findViewById(R.id.button_cria_conta);
+
+            buttonLogin.setOnClickListener(new View.OnClickListener() {
+                @Override
+                public void onClick(View v) {
+                    Intent intent = new Intent(v.getContext(), ActivityLogin.class);
+                    startActivity(intent);
+
+
+                }
+            });
+
+            buttonCriarConta.setOnClickListener(new View.OnClickListener() {
+                @Override
+                public void onClick(View v) {
+                    Intent intent = new Intent(v.getContext(), ActivityCriarConta.class);
+                    startActivity(intent);
+                }
+            });
+
+
+
+
+
+
+
+        }
+
+
+
+
+
+
+
+
+
+
+
+
+//        Intent intent = new Intent(this, ActivityValidarIngresso.class);
+//        startActivity(intent);
 
 
     }
