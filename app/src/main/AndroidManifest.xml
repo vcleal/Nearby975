@@ -16,6 +16,7 @@
 
         <activity android:name=".ActivityValidarIngresso"></activity>
         <activity android:name=".AgendaActivity"></activity>
+        <activity android:name=".TesteDB"></activity>
 
     </application>
 

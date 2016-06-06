@@ -9,20 +9,41 @@ import java.sql.Statement;
 import android.app.Activity;
 import android.util.Log;
 
-public class dbMySQL extends Activity{
+public class dbMySQL{
     private Connection conn = null;
     private Statement st;
     private ResultSet rs;
-    private String sql;
+    //private String sql;
 
-    public void conectarMySQL(String host, String porta, String banco, String usuario, String senha){
+    public void conectarMySQL(){
+        //localhost
+        String host = "10.0.2.2";
+        String banco = "test";
+        String usuario = "root";
+        String senha = "bala123";
+
+        //server unicamp
+        /*
+        //String host = "ea975.fee.unicamp.br";
+        String host = "143.106.148.113";
+        String banco = "open";
+        String usuario = "open";
+        String senha = "open123";
+        */
+
+        String porta = "3306";
+
+        System.out.println("teste3");
         try{
             Class.forName("com.mysql.jdbc.Driver").newInstance();
+            System.out.println("teste4");
         }catch(Exception erro){
             Log.e("MYSQL","Erro: "+erro);
         }
         try{
+            System.out.println("teste5");
             conn=DriverManager.getConnection("jdbc:mysql://"+host+":"+porta+"/"+banco,usuario,senha);
+            System.out.println("teste2");
             Log.i("MYSQL","Conectado.");
         }catch(Exception erro){
             Log.e("MYSQL","Erro: "+erro);
@@ -38,18 +59,22 @@ public class dbMySQL extends Activity{
         }
     }
 
-    public void queryMySQL(){
+    public ResultSet querysMySQL(String sql){
         try{
             st=conn.createStatement();
-            sql="SELECT * FROM teste WHERE 1";
+            //sql="SELECT * FROM teste WHERE 1";
             rs=st.executeQuery(sql);
-            rs.first();
+            //ResultSet vis = rs;
+            /*
+            vis.first();
             do {
-                Log.i("MYSQL", "Resultado: " + rs.getString("nome"));
-            }while(rs.next());
+                Log.i("MYSQL", "Resultado: " + vis.getString("nome"));
+            }while(vis.next());
+            */
         } catch (Exception erro){
             Log.e("MYSQL","Erro: "+erro);
         }
+        return rs;
     }
 
 }
