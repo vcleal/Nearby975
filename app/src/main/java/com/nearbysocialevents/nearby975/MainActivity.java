@@ -3,11 +3,9 @@ package com.nearbysocialevents.nearby975;
 import android.app.Activity;
 
 import android.content.Intent;
-import android.os.AsyncTask;
 import android.os.Bundle;
-import android.os.Handler;
-import android.util.Log;
-import android.widget.EditText;
+
+import com.nearbysocialevents.nearby975.MySql.TesteDB;
 
 public class MainActivity extends Activity {
 

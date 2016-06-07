@@ -1,4 +1,4 @@
-package com.nearbysocialevents.nearby975;
+package com.nearbysocialevents.nearby975.MySql;
 
 
 import java.sql.Connection;
