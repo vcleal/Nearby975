@@ -61,7 +61,7 @@
                 android:ems="10"
                 android:layout_margin="2dp"
                 android:hint="Preço do Ingresso"
-                android:id="@+id/preçoIngresso"
+                android:id="@+id/precoIngressoAlteracaoEvento"
                 android:layout_gravity="center_horizontal" />
 
             <EditText
