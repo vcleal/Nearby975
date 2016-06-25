@@ -17,10 +17,11 @@
             android:layout_height="match_parent">
 
             <ImageButton
-                android:layout_width="257dp"
+                android:layout_width="match_parent"
                 android:layout_height="182dp"
                 android:id="@+id/eventImage"
                 android:background="@android:drawable/ic_menu_camera"
+                android:scaleType="fitCenter"
                 android:layout_gravity="center_horizontal" />
 
             <EditText
