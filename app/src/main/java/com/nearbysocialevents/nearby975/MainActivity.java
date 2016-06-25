@@ -7,7 +7,6 @@ import android.content.SharedPreferences;
 import android.os.Bundle;
 import android.view.View;
 import android.widget.Button;
-import android.widget.EditText;
 
 public class MainActivity extends Activity {
 /*    Button buttonAgenda;
@@ -23,7 +22,22 @@ public class MainActivity extends Activity {
     private Button buttonCriarConta;
     public static final String MY_PREFS_NAME = "LoginInfo";
     private boolean isLogged;
+    private UsuarioSingleton user = UsuarioSingleton.getInstance();
 
+
+    @Override
+    protected void onRestart() {
+        super.onRestart();
+        SharedPreferences prefs = getSharedPreferences(MY_PREFS_NAME, MODE_PRIVATE);
+        isLogged = prefs.getBoolean("logged",false);
+        if(isLogged) {
+            user.setUsuario(prefs.getString("user", "ERRO_USUARIO"));
+            Intent intent = new Intent(this, ActivityTelaPrincipal.class);
+            startActivity(intent);
+            this.finish();
+        }
+
+    }
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -33,8 +47,10 @@ public class MainActivity extends Activity {
         SharedPreferences prefs = getSharedPreferences(MY_PREFS_NAME, MODE_PRIVATE);
         isLogged = prefs.getBoolean("logged",false);
         if(isLogged){
+            user.setUsuario(prefs.getString("user","ERRO_USUARIO"));
             Intent intent = new Intent(this, ActivityTelaPrincipal.class);
             startActivity(intent);
+            this.finish();
 
         }else{
 

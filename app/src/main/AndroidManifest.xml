@@ -16,6 +16,12 @@
         <activity android:name=".ActivityCriarConta"></activity>
         <activity android:name=".ActivityLogin"></activity>
         <activity android:name=".ActivityTelaPrincipal"></activity>
+        <activity android:name=".ActivityAlterarDadosPessoais"></activity>
+        <activity android:name=".ActivityMeusEventos"></activity>
+        <activity android:name=".ActivityCriarEvento"></activity>
+        <activity android:name=".ActivityListaContatos"></activity>
+        <activity android:name=".ActivityBuscarEvento"></activity>
+
 
     </application>
 

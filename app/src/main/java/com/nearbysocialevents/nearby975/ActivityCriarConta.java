@@ -39,9 +39,9 @@ public class ActivityCriarConta extends Activity{
         }
     }
 
-
+//TODO validar string com data
     private boolean validaData(){
-
+        return true;
     }
 
 
@@ -92,6 +92,7 @@ public class ActivityCriarConta extends Activity{
      * Esta funcao deve enviar os dados ao servidor e retornar se o cadastro foi feito com sucesso ou nao
      * @return
      */
+    //TODO enviar cadastro
     private boolean enviaCadastroServidor(){
 
 

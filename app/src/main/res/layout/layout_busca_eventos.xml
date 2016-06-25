@@ -3,13 +3,13 @@
     android:orientation="vertical" android:layout_width="match_parent"
     android:layout_height="match_parent">
 
-    <TextView
-        android:layout_width="wrap_content"
+    <EditText
+        android:layout_width="match_parent"
         android:layout_height="wrap_content"
         android:textAppearance="?android:attr/textAppearanceLarge"
-        android:text="Busca de Eventos"
-        android:layout_marginBottom="30dp"
-        android:layout_marginTop="30dp"
+        android:hint="Busca de Evento"
+        android:layout_marginBottom="5dp"
+        android:layout_marginTop="10dp"
         android:id="@+id/textView"
         android:layout_gravity="center_horizontal"
         android:textSize="25dp" />
