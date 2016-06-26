@@ -23,6 +23,10 @@
         <activity android:name=".ActivityListaContatos"></activity>
         <activity android:name=".ActivityBuscarEvento"></activity>
         <activity android:name=".ActivityEvento"></activity>
+        <activity android:name=".ActivityGerenciarEvento"></activity>
+        <activity android:name=".ActivityFotosEvento"></activity>
+        <activity android:name=".ActivityChat"></activity>
+        <activity android:name=".ActivityVerIngresso"></activity>
 
 
     </application>

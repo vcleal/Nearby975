@@ -10,6 +10,11 @@ import java.util.List;
  */
 public class Evento implements Serializable{
     public String nome;
+
+    public String getId() {
+        return id;
+    }
+
     private String id;
 
 

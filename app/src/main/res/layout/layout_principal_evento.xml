@@ -100,6 +100,8 @@
                 android:id="@+id/descricao"
                 android:textSize="15dp" />
 
+
+
             <LinearLayout
                 android:orientation="horizontal"
                 android:layout_width="match_parent"
@@ -166,7 +168,12 @@
             </LinearLayout>
 
 
-
+            <Button
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:layout_marginLeft="20dp"
+                android:text="Ver Ingresso"
+                android:id="@+id/button_ver_ingresso" />
 
         </LinearLayout>
     </ScrollView>

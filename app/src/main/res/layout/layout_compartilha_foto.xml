@@ -14,19 +14,38 @@
         <LinearLayout
             android:orientation="vertical"
             android:layout_width="match_parent"
+
             android:layout_height="match_parent">
 
-            <TextView
-                android:layout_width="wrap_content"
+            <LinearLayout
+                android:orientation="horizontal"
+                android:layout_margin="15dp"
+                android:layout_width="match_parent"
                 android:layout_height="wrap_content"
-                android:textAppearance="?android:attr/textAppearanceLarge"
-                android:text="Fotos"
-                android:textSize="30dp"
-                android:id="@+id/text_nome_evento_fotos"
-                android:layout_gravity="center_horizontal" />
+                android:layout_gravity="right">
+
+                <TextView
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:textAppearance="?android:attr/textAppearanceLarge"
+                    android:text="Fotos"
+                    android:textSize="30dp"
+                    android:layout_marginLeft="10dp"
+                    android:id="@+id/text_nome_evento_fotos"
+                    android:layout_gravity="center_horizontal" />
+
+                <Button
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:layout_marginLeft="140dp"
+                    android:text="Enviar Foto"
+                    android:id="@+id/button_enviar_foto"
+                    android:layout_gravity="center_horizontal" />
+            </LinearLayout>
 
             <ListView
-                android:layout_width="wrap_content"
+                android:layout_width="match_parent"
+                android:layout_gravity="center_horizontal"
                 android:layout_height="wrap_content"
                 android:id="@+id/list_fotos" />
         </LinearLayout>
