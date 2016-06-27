@@ -64,7 +64,7 @@ public class Evento implements Serializable{
         descricao = "";
         local = "Rua dos bobos";
         ingressosDisponiveisParaCompra = 20;
-        owner="admin";
+        owner="admin2";
         atendentes = new ArrayList<String>();
 
     }

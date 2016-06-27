@@ -40,7 +40,7 @@ public class MyListAdapter extends ArrayAdapter<Evento> {
 
     @Override
     public long getItemId(int position) {
-        // TODO Auto-generated method stub
+        
         return position;
     }
 
