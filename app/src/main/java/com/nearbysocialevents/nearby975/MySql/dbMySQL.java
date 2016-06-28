@@ -17,10 +17,19 @@ public class dbMySQL{
 
     public void conectarMySQL(){
         //localhost
+        /*
         String host = "10.0.2.2";
         String banco = "test";
         String usuario = "root";
         String senha = "bala123";
+        */
+
+        //server amazon
+        //String host = "ea975.fee.unicamp.br";
+        String host = "50.16.221.234";
+        String banco = "EA975";
+        String usuario = "EA975";
+        String senha = "ea975";
 
         //server unicamp
         /*
@@ -33,17 +42,17 @@ public class dbMySQL{
 
         String porta = "3306";
 
-        System.out.println("teste3");
+        System.out.println("teste2");
         try{
             Class.forName("com.mysql.jdbc.Driver").newInstance();
-            System.out.println("teste4");
+            System.out.println("teste3");
         }catch(Exception erro){
             Log.e("MYSQL","Erro: "+erro);
         }
         try{
-            System.out.println("teste5");
+            System.out.println("teste4");
             conn=DriverManager.getConnection("jdbc:mysql://"+host+":"+porta+"/"+banco,usuario,senha);
-            System.out.println("teste2");
+            System.out.println("teste5");
             Log.i("MYSQL","Conectado.");
         }catch(Exception erro){
             Log.e("MYSQL","Erro: "+erro);

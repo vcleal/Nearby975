@@ -36,7 +36,7 @@ public class TesteDB extends Activity {
                         }while(result.next());
                     }
                 };
-                job1.execute("SELECT * FROM teste WHERE 1");
+                job1.execute("SELECT * FROM usuarios_teste WHERE 1");
                 System.out.println("teste");
 
             }
@@ -60,7 +60,7 @@ public class TesteDB extends Activity {
                 SendMySql job2 = new SendMySql();
                 teste1 obj = new teste1();
                 job2.usar(obj);
-                job2.execute("SELECT * FROM teste WHERE 1");
+                job2.execute("SELECT * FROM usuarios_teste WHERE 1");
             }
         });
         //////////////Fim Tipo 2////////////////
@@ -71,7 +71,7 @@ public class TesteDB extends Activity {
             public void onClick(View v) {
                 SendMySql job3 = new SendMySql();
                 job3.usarTabela(1);
-                job3.execute("SELECT * FROM teste WHERE 1");
+                job3.execute("SELECT * FROM usuarios_teste WHERE 1");
             }
         });
         //////////////Fim Tipo 3////////////////
