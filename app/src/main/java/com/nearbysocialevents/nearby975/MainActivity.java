@@ -9,14 +9,7 @@ import android.view.View;
 import android.widget.Button;
 
 public class MainActivity extends Activity {
-/*    Button buttonAgenda;
-    Button buttonMercado;
-    Button buttonMeusEventos;
-    Button buttonCriarEvento;
-    Button buttonBuscarEventos;
-    Button buttonContatos;
-    Button buttonLogout;
-*/
+
 
     private Button buttonLogin;
     private Button buttonCriarConta;

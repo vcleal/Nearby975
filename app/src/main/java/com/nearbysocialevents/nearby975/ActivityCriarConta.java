@@ -1,16 +1,27 @@
 package com.nearbysocialevents.nearby975;
 
 import android.app.Activity;
+import android.content.Context;
+import android.content.Intent;
+import android.content.SharedPreferences;
 import android.os.Bundle;
 import android.text.Editable;
 import android.text.TextUtils;
 import android.text.TextWatcher;
+import android.util.Log;
 import android.util.Patterns;
 import android.view.View;
 import android.widget.Button;
 import android.widget.EditText;
 import android.widget.Spinner;
 import android.widget.Toast;
+
+import com.nearbysocialevents.nearby975.MySql.SendMySql;
+import com.nearbysocialevents.nearby975.MySql.UpdateMySql;
+import com.nearbysocialevents.nearby975.MySql.dbMySQL;
+
+import java.sql.ResultSet;
+import java.sql.SQLException;
 
 /**
  * Created by root on 6/3/16.
@@ -25,6 +36,7 @@ public class ActivityCriarConta extends Activity{
     private EditText txtBirthDate;
     private Spinner spnSexo;
     private Button buttonConfirm;
+    private Context ctx;
 
     /**
      * Valida um endereco de email
@@ -45,11 +57,14 @@ public class ActivityCriarConta extends Activity{
     }
 
 
+
+    boolean isdebugging = true;
     /**
      * Testa se o formulario esta preenchido
      * @return
      */
     private boolean isFilled(){
+        if(isdebugging) return true;
         if(txtNome.getText().equals("") || txtNome.getText().length() < 2){
             Toast.makeText(this, "Nome Invalido", Toast.LENGTH_SHORT).show();
             return false;
@@ -92,9 +107,33 @@ public class ActivityCriarConta extends Activity{
      * Esta funcao deve enviar os dados ao servidor e retornar se o cadastro foi feito com sucesso ou nao
      * @return
      */
-    //TODO enviar cadastro
-    private boolean enviaCadastroServidor(){
 
+
+    UpdateMySql job1;
+    private boolean enviaCadastroServidor(){
+        job1 = new UpdateMySql();
+
+        String sql = "INSERT INTO usuario  (`nome`,`email`,`senha`,`telefone`,`data_nascimento` ) VALUES ('" +
+        txtNome.getText().toString()+
+        "','" +
+        txtMail.getText().toString() +
+        "','" +
+        txtPwd.getText().toString() +
+        "','" +
+        txtPhone.getText().toString() +
+        "','" +
+        txtBirthDate.getText().toString() +
+
+        "')";
+
+
+
+
+        //sql = "INSERT INTO usuario (`senha`) VALUES ('blablabla')";
+        job1.execute(sql);
+
+
+        System.out.println("teste");
 
         return true;
     }
@@ -108,6 +147,8 @@ public class ActivityCriarConta extends Activity{
         super.onCreate(savedInstanceState);
         setContentView(R.layout.layout_cadastro);
         txtNome = (EditText) findViewById(R.id.text_nome);
+        ctx = this;
+
         txtMail = (EditText) findViewById(R.id.text_email);
         txtPwd = (EditText) findViewById(R.id.text_pwd);
         txtConfPwd = (EditText) findViewById(R.id.text_pwd_conf);
@@ -116,14 +157,13 @@ public class ActivityCriarConta extends Activity{
         spnSexo = (Spinner) findViewById(R.id.spinner_sexo_cadastro);
         buttonConfirm = (Button) findViewById(R.id.button_conf_cadastro);
 
-
         buttonConfirm.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
                 if(isFilled()){
                     if(enviaCadastroServidor()){
 
-                        Toast.makeText(v.getContext(), "Cadastro Efetuado com sucesso!", Toast.LENGTH_SHORT).show();
+
 
 
                     }

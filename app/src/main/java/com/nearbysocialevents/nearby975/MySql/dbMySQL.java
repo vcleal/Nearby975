@@ -86,4 +86,26 @@ public class dbMySQL{
         return rs;
     }
 
+
+    public int updatesMySQL(String sql){
+        try{
+            st=conn.createStatement();
+            //sql="SELECT * FROM teste WHERE 1";
+            return st.executeUpdate(sql);
+            //ResultSet vis = rs;
+            /*
+            vis.first();
+            do {
+                Log.i("MYSQL", "Resultado: " + vis.getString("nome"));
+            }while(vis.next());
+            */
+        } catch (Exception erro){
+            Log.e("MYSQL","Erro: "+erro);
+            return 0;
+        }
+
+    }
+
+
+
 }
