@@ -5,26 +5,30 @@ import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
 import android.widget.ArrayAdapter;
+import android.widget.ImageView;
 import android.widget.TextView;
+
+import org.w3c.dom.Text;
 
 import java.text.DateFormat;
 import java.text.SimpleDateFormat;
 import java.util.ArrayList;
-import java.util.Date;
 
-
-public class MyListAdapter extends ArrayAdapter<Evento> {
+/**
+ * Created by root on 6/28/16.
+ */
+public class MyContatoAdapter  extends ArrayAdapter<Usuario> {
 
     private Context context;
-    private ArrayList<Evento> allEvents;
+    private ArrayList<Usuario> allEvents;
 
     private LayoutInflater mInflater;
     private boolean mNotifyOnChange = true;
 
-    public MyListAdapter(Context context, ArrayList<Evento> mPersons) {
-        super(context, R.layout.layout_evento_agenda);
+    public MyContatoAdapter(Context context, ArrayList<Usuario> mPersons) {
+        super(context, R.layout.layout_contato_list_item);
         this.context = context;
-        this.allEvents = new ArrayList<Evento>(mPersons);
+        this.allEvents = new ArrayList<Usuario>(mPersons);
         this.mInflater = LayoutInflater.from(context);
     }
 
@@ -34,17 +38,17 @@ public class MyListAdapter extends ArrayAdapter<Evento> {
     }
 
     @Override
-    public Evento getItem(int position) {
+    public Usuario getItem(int position) {
         return allEvents.get(position);
     }
 
     @Override
     public long getItemId(int position) {
-        
+
         return position;
     }
 
-    @Override
+
     public int getPosition(Evento item) {
         return allEvents.indexOf(item);
     }
@@ -72,20 +76,19 @@ public class MyListAdapter extends ArrayAdapter<Evento> {
             holder = new ViewHolder();
             switch (type) {
                 case 1:
-                    convertView = mInflater.inflate(R.layout.layout_evento_agenda,parent, false);
-                    holder.name = (TextView) convertView.findViewById(R.id.text_nome_evento_agenda);
-                    holder.data = (TextView) convertView.findViewById(R.id.text_date_evento_agenda);
-                    holder.preco = (TextView) convertView.findViewById(R.id.text_preco_evento_agenda);
-                    holder.distancia = (TextView) convertView.findViewById(R.id.text_distancia_evento_agenda);
+                    convertView = mInflater.inflate(R.layout.layout_contato_list_item,parent, false);
+                    holder.foto = (ImageView) convertView.findViewById(R.id.imageContato);
+                    holder.nome = (TextView) convertView.findViewById(R.id.text_nome_contato);
+
                     break;
             }
             convertView.setTag(holder);
         } else {
             holder = (ViewHolder) convertView.getTag();
         }
-        holder.name.setText(allEvents.get(position).nome);
-        holder.data.setText(df.format(allEvents.get(position).data));
-        holder.preco.setText(Float.toString(allEvents.get(position).preco));
+        holder.foto.setImageBitmap(allEvents.get(position).foto);
+        holder.nome.setText(allEvents.get(position).nome);
+
         holder.pos = position;
         return convertView;
     }
@@ -104,10 +107,13 @@ public class MyListAdapter extends ArrayAdapter<Evento> {
     //---------------static views for each row-----------//
     static class ViewHolder {
 
-        TextView name;
-        TextView data;
-        TextView preco;
-        TextView distancia;
+
+        ImageView foto;
+        TextView nome;
         int pos; //to store the position of the item within the list
     }
+
+
+
+
 }

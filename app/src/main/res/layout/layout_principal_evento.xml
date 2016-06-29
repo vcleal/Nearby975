@@ -100,6 +100,8 @@
                 android:id="@+id/descricao"
                 android:textSize="15dp" />
 
+
+
             <LinearLayout
                 android:orientation="horizontal"
                 android:layout_width="match_parent"
@@ -115,6 +117,13 @@
                     android:text="Comprar"
                     android:id="@+id/button_comprar_ingresso"
                     android:layout_gravity="center_horizontal" />
+                <Button
+                    android:layout_width="100dp"
+                    android:layout_height="wrap_content"
+                    android:layout_margin="5dp"
+                    android:text="Enviar Ingresso"
+                    android:id="@+id/button_enviar"
+                    android:layout_gravity="center_horizontal" />
 
                 <Button
                     android:layout_width="100dp"
@@ -123,13 +132,7 @@
                     android:text="Gerenciar"
                     android:id="@+id/button_gerenciar"
                     android:layout_gravity="center_horizontal" />
-                <Button
-                    android:layout_width="100dp"
-                    android:layout_height="wrap_content"
-                    android:layout_margin="5dp"
-                    android:text="Enviar Ingresso"
-                    android:id="@+id/button_enviar"
-                    android:layout_gravity="center_horizontal" />
+
 
             </LinearLayout>
 
@@ -154,10 +157,23 @@
                     android:text="Fotos"
                     android:id="@+id/button_fotos"
                     android:layout_gravity="center_horizontal" />
+                <Button
+                    android:layout_width="100dp"
+                    android:layout_height="wrap_content"
+                    android:layout_margin="5dp"
+                    android:text="Validar Ingressos"
+                    android:id="@+id/button_validar"
+                    android:layout_gravity="center_horizontal" />
+
             </LinearLayout>
 
 
-
+            <Button
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:layout_marginLeft="20dp"
+                android:text="Ver Ingresso"
+                android:id="@+id/button_ver_ingresso" />
 
         </LinearLayout>
     </ScrollView>

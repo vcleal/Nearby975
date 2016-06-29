@@ -16,7 +16,7 @@
         android:layout_height="wrap_content"
         android:inputType="textEmailAddress"
         android:ems="10"
-        android:id="@+id/editText"
+        android:id="@+id/edtMailLogin"
         android:layout_gravity="center_horizontal"
         android:hint="E-mail" />
 
@@ -26,7 +26,7 @@
         android:inputType="textPassword"
         android:layout_marginTop="10dp"
         android:ems="10"
-        android:id="@+id/editText2"
+        android:id="@+id/edtPwdLogin"
         android:layout_gravity="center_horizontal"
         android:hint="Senha" />
 

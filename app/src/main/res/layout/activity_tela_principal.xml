@@ -19,7 +19,7 @@
         <ImageButton
             android:layout_width="100dp"
             android:layout_height="100dp"
-            android:id="@+id/imageButton"
+            android:id="@+id/image_user_button"
             android:background="@android:drawable/ic_menu_camera" />
 
         <TextView android:layout_width="wrap_content" android:layout_height="wrap_content"
@@ -50,13 +50,6 @@
                 android:layout_height="70dp"
                 android:text="Agenda"
                 android:id="@+id/button_agenda"
-                android:textSize="20dp" />
-            <Button
-                android:layout_width="match_parent"
-                android:layout_margin="5dp"
-                android:layout_height="70dp"
-                android:text="Mercado"
-                android:id="@+id/button_mercado"
                 android:textSize="20dp" />
             <Button
                 android:layout_width="match_parent"
