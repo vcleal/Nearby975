@@ -7,17 +7,23 @@ package com.nearbysocialevents.nearby975;
 public class UsuarioSingleton {
     private static UsuarioSingleton ourInstance = new UsuarioSingleton();
     private String usuario;
+    private String nome;
 
 
 
     public String getUsuario() {
         return usuario;
     }
+    public String getNome() {
+        return nome;
+    }
 
     public void setUsuario(String usuario) {
         this.usuario = usuario;
     }
-
+    public void setNome(String nome1) {
+        this.nome = nome1;
+    }
 
 
 

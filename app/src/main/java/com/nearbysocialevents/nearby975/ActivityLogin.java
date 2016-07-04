@@ -57,6 +57,7 @@ public class ActivityLogin extends Activity{
                     editor.putString("user",mail.getText().toString());
                     user = UsuarioSingleton.getInstance();
                     user.setUsuario(mail.getText().toString());
+                    user.setNome(result.getString("nome"));
                     editor.commit();
                     ((Activity)ctx).finish();
                     Intent intent = new Intent(((Activity)ctx), ActivityTelaPrincipal.class);
@@ -66,7 +67,7 @@ public class ActivityLogin extends Activity{
             }
         };
         job1.execute("SELECT * FROM usuario WHERE email = '"+email + "' AND  senha = '"+senha +"'");
-        System.out.println("teste");
+        System.out.println("Login_execute");
 
 
 

@@ -15,6 +15,10 @@ import android.widget.EditText;
 import android.widget.ImageButton;
 import android.widget.Toast;
 
+import com.nearbysocialevents.nearby975.MySql.UpdateMySql;
+
+import java.sql.SQLException;
+
 /**
  * Created by root on 6/25/16.
  */
@@ -48,8 +52,47 @@ public class ActivityCriarEvento extends Activity {
      * Envia evento para servidor
      * @return true se enviou com sucesso, false caso contrario
      */
-    private boolean enviarEventoParaServidor(){
 
+    private void chamaToast(String var){
+        Toast.makeText(this, var, Toast.LENGTH_SHORT).show();
+    }
+
+    UpdateMySql job1;
+    private boolean enviarEventoParaServidor(){
+        job1 = new UpdateMySql(){
+            @Override
+            public void naResposta(Integer result) throws SQLException {
+                if(result > 0) {
+                    chamaToast("Evento criado com sucesso !!!");
+                    finish();
+                }else{
+                    chamaToast("Ocorreu um erro !!! Tente de novo");
+                }
+            }
+        };
+
+        UsuarioSingleton user = UsuarioSingleton.getInstance();
+
+        String sql = "INSERT INTO eventos  (`nome_evento`,`nome_dono`,`data_dia`,`data_hora`,`preco`,`local`,`descricao` ) VALUES ('" +
+                edtNomeEvento.getText().toString()+
+                "','" +
+                user.getNome() +
+                "','" +
+                edtDataEvento.getText().toString() +
+                "','" +
+                edtHoraEvento.getText().toString() +
+                "','" +
+                edtPrecoIngresso.getText().toString() +
+                "','" +
+                edtLocalEvento.getText().toString() +
+                "','" +
+                edtDescricao.getText().toString() +
+                "')";
+
+        job1.execute(sql);
+        chamaToast("Criando Evento .....");
+
+        System.out.println("Evento_Criado");
 
         return true;
     }
@@ -104,12 +147,12 @@ public class ActivityCriarEvento extends Activity {
             public void onClick(View v) {
                 if(isFormValid()){
                     if(!enviarEventoParaServidor()){
-                        Toast.makeText(v.getContext(), "Falha na criacao do evento - Confira sua conexao com a internet.", Toast.LENGTH_LONG).show();
+                        //Toast.makeText(v.getContext(), "Falha na criacao do evento - Confira sua conexao com a internet.", Toast.LENGTH_LONG).show();
 
 
                     }else{
-                        Toast.makeText(v.getContext(), "Evento criado com sucesso!", Toast.LENGTH_LONG).show();
-                        ((Activity)v.getContext()).finish();
+                        //Toast.makeText(v.getContext(), "Evento criado com sucesso!", Toast.LENGTH_LONG).show();
+                        //((Activity)v.getContext()).finish();
                     }
 
 

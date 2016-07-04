@@ -141,7 +141,7 @@ public class ActivityCriarConta extends Activity{
         job1.execute(sql);
         chamaToast("Criando Conta .....");
 
-        System.out.println("teste");
+        System.out.println("Conta_Criada");
 
         return true;
     }

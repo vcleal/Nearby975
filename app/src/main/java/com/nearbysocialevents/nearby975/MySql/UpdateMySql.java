@@ -32,9 +32,10 @@ public class UpdateMySql extends AsyncTask<String, Void, Integer> {
     private int indiceTabela;
 
     protected Integer doInBackground(String... sql) {
+        Integer resposta;
         dbmysql.conectarMySQL(); // ip do servidor mysql, porta, banco, usuário, senha
-        dbmysql.updatesMySQL(sql[0]);
-        return 1;
+        resposta =  dbmysql.updatesMySQL(sql[0]);
+        return resposta;
     }
 
     /** The system calls this to perform work in the UI thread and delivers
