@@ -121,7 +121,7 @@ public class ActivityEvento extends Activity{
 
         txtNomeEvento.setText(event.nome);
         txtDescricaoEvento.setText(event.descricao);
-        txtPrecoEvento.setText("R$"+Float.toString(event.preco));
+        txtPrecoEvento.setText("R$"+Double.toString(event.preco));
         txtEnderecoEvento.setText(event.local);
         txtHoraEvento.setText(DateFormat.format("dd/MM/yyyy - hh:mm",event.data).toString());
 

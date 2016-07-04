@@ -67,6 +67,7 @@ public class ActivityLogin extends Activity{
             }
         };
         job1.execute("SELECT * FROM usuario WHERE email = '"+email + "' AND  senha = '"+senha +"'");
+        Toast.makeText(ctx,"Validando Usuário",Toast.LENGTH_LONG).show();
         System.out.println("Login_execute");
 
 

@@ -21,12 +21,13 @@ public class Evento implements Serializable{
 
     private String owner;
     private List<String> atendentes;
-    public float preco;
+    public double preco;
     public float distancia;
     public String local;
     public int ingressosDisponiveisParaCompra;
     public String descricao;
     public Date data;
+    public String datac;
 
     public void setOwner(String owner) {
         this.owner = owner;
@@ -67,6 +68,16 @@ public class Evento implements Serializable{
         owner="admin2";
         atendentes = new ArrayList<String>();
 
+    }
+
+    public Evento(String nome2, double preco2, Date data2){
+        nome=nome2;
+        preco = preco2;
+        data=data2;
+        descricao = "";
+        local = "Rua dos bobos";
+        ingressosDisponiveisParaCompra = 20;
+        owner="admin2";
     }
 
 }
