@@ -84,7 +84,7 @@ public class ActivityBuscarEvento extends Activity {
             public void afterTextChanged(Editable s) {
                // eventos = new ArrayList<Evento>();
                 String conteudoDaBusca = busca.getText().toString();
-                //TODO: popular eventos com itens que contenham 'conteudoDaBusca'
+                //TODO: FEITO - popular eventos com itens que contenham 'conteudoDaBusca'
                 //eventos.add(new Evento("0014","Evento 2",(float)i,new Date(),30));
                 // eventos.add(new Evento("Casa da Joana Funck", 20.0, new Date() ));
                 // eventos.add(new Evento("Casa da Joana Funck 2", 25.0, new Date() ));

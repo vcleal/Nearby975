@@ -36,7 +36,7 @@ public class ActivityChat extends Activity {
 
                 UsuarioSingleton user = UsuarioSingleton.getInstance();
                 String mensage = user.getUsuario() + ": " +newMessage.getText().toString()+"\n";
-                //TODO: dar append na mensangem da variavel 'message' e enviar ao servidor.
+                //TODO: dar append na menssangem da variavel 'mensage' e enviar ao servidor.
 
             }
         });

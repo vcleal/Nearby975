@@ -51,7 +51,7 @@ public class ActivityCriarConta extends Activity{
         }
     }
 
-//TODO validar string com data
+//TODO  validar string com data de nascimento
     private boolean validaData(){
         return true;
     }
@@ -104,14 +104,38 @@ public class ActivityCriarConta extends Activity{
 
 
     /**
-     * Esta funcao deve enviar os dados ao servidor e retornar se o cadastro foi feito com sucesso ou nao
-     * @return
+     * Este método busca no servidor se o email inserido já foi tomado e se não prossegue com o cadastro
      */
 
+    SendMySql job1;
+    private boolean verificaEmailServidor(){
+        job1 = new SendMySql(){
+            @Override
+            public void naResposta(ResultSet result) throws SQLException {
+                if(!result.next()) {
+                    enviaCadastroServidor();
+                }else {
+                    chamaToast("Email já usado !");
+                }
 
-    UpdateMySql job1;
+            }
+        };
+
+        String sql = "SELECT * FROM usuario WHERE `email` = '"+ txtMail.getText().toString()+"'";
+        //System.out.println("SQL:"+sql);
+        job1.execute(sql);
+        chamaToast("Criando Conta .....");
+        System.out.println("Verificando_Email");
+
+        return true;
+    }
+
+    /**
+     * Este método envia os dados inserido no servidor
+     */
+    UpdateMySql job2;
     private boolean enviaCadastroServidor(){
-        job1 = new UpdateMySql(){
+        job2 = new UpdateMySql(){
             @Override
             public void naResposta(Integer result) throws SQLException {
                 if(result > 0) {
@@ -136,10 +160,7 @@ public class ActivityCriarConta extends Activity{
         "')";
 
         //sql = "INSERT INTO usuario (`senha`) VALUES ('blablabla')";
-
-
-        job1.execute(sql);
-        chamaToast("Criando Conta .....");
+        job2.execute(sql);
 
         System.out.println("Conta_Criada");
 
@@ -172,9 +193,10 @@ public class ActivityCriarConta extends Activity{
             @Override
             public void onClick(View v) {
                 if(isFilled()){
-                    if(enviaCadastroServidor()){
 
-                    }
+                    verificaEmailServidor();
+                    //enviaCadastroServidor();
+
 
                 }else{
                     //do nothing
