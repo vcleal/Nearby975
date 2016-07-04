@@ -41,15 +41,16 @@ public class UpdateMySql extends AsyncTask<String, Void, Integer> {
      * the result from doInBackground() */
     protected void onPostExecute(Integer result) {
         try {
-
-
+            naResposta(result);
         }catch (Exception erro){
             Log.e("MYSQL","Erro: "+erro);
         }
         dbmysql.desconectarMySQL();
     }
 
-
+    public void naResposta(Integer result) throws SQLException {
+        //De um override nesta função com as ações a serem executadas com a resposta do SQL
+    }
 
 
 }

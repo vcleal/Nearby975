@@ -111,7 +111,17 @@ public class ActivityCriarConta extends Activity{
 
     UpdateMySql job1;
     private boolean enviaCadastroServidor(){
-        job1 = new UpdateMySql();
+        job1 = new UpdateMySql(){
+            @Override
+            public void naResposta(Integer result) throws SQLException {
+                if(result > 0) {
+                    chamaToast("Conta criada com sucesso !!!");
+                    finish();
+                }else{
+                    chamaToast("Ocorreu um erro !!! Tente de novo");
+                }
+            }
+        };
 
         String sql = "INSERT INTO usuario  (`nome`,`email`,`senha`,`telefone`,`data_nascimento` ) VALUES ('" +
         txtNome.getText().toString()+
@@ -123,15 +133,13 @@ public class ActivityCriarConta extends Activity{
         txtPhone.getText().toString() +
         "','" +
         txtBirthDate.getText().toString() +
-
         "')";
 
-
-
-
         //sql = "INSERT INTO usuario (`senha`) VALUES ('blablabla')";
-        job1.execute(sql);
 
+
+        job1.execute(sql);
+        chamaToast("Criando Conta .....");
 
         System.out.println("teste");
 
@@ -139,6 +147,9 @@ public class ActivityCriarConta extends Activity{
     }
 
 
+    private void chamaToast(String var){
+        Toast.makeText(this, var, Toast.LENGTH_SHORT).show();
+    }
 
 
 
@@ -147,7 +158,7 @@ public class ActivityCriarConta extends Activity{
         super.onCreate(savedInstanceState);
         setContentView(R.layout.layout_cadastro);
         txtNome = (EditText) findViewById(R.id.text_nome);
-        ctx = this;
+        ctx = this.getApplicationContext();
 
         txtMail = (EditText) findViewById(R.id.text_email);
         txtPwd = (EditText) findViewById(R.id.text_pwd);
@@ -163,12 +174,7 @@ public class ActivityCriarConta extends Activity{
                 if(isFilled()){
                     if(enviaCadastroServidor()){
 
-
-
-
                     }
-
-
 
                 }else{
                     //do nothing

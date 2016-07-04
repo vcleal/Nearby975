@@ -40,7 +40,7 @@ public class ActivityLogin extends Activity{
 
         job1 = new SendMySql() {
             @Override
-            protected void naResposta(ResultSet result) throws SQLException {
+            public void naResposta(ResultSet result) throws SQLException {
                 if(!result.next()){
                     //nao retornou nada
                     Toast.makeText(ctx,"Senha ou usuario invalidos",Toast.LENGTH_LONG).show();

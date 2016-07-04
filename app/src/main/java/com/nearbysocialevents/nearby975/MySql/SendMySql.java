@@ -57,7 +57,7 @@ public class SendMySql extends AsyncTask<String, Void, ResultSet> {
         dbmysql.desconectarMySQL();
     }
 
-    protected void naResposta(ResultSet result) throws SQLException {
+    public void naResposta(ResultSet result) throws SQLException {
         //De um override nesta função com as ações a serem executadas com a resposta do SQL
     }
 

@@ -29,7 +29,7 @@ public class TesteDB extends Activity {
 
                 SendMySql job1 = new SendMySql() {
                     @Override
-                    protected void naResposta(ResultSet result) throws SQLException {
+                    public void naResposta(ResultSet result) throws SQLException {
                         result.first();
                         do {
                             Log.i("MYSQL", "Resultado: " + result.getString("nome"));
