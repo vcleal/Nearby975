@@ -50,7 +50,7 @@ public class ActivityTelaPrincipal extends Activity{
          */
         //TODO: preencher foto
 
-        nomeUsuario.setText(user.getUsuario());
+        nomeUsuario.setText(user.getNome());
 
 
 

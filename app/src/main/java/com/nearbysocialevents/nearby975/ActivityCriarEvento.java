@@ -47,11 +47,6 @@ public class ActivityCriarEvento extends Activity {
     }
 
 
-    //TODO: enviar para servidor
-    /**
-     * Envia evento para servidor
-     * @return true se enviou com sucesso, false caso contrario
-     */
 
     private void chamaToast(String var){
         Toast.makeText(this, var, Toast.LENGTH_SHORT).show();
