@@ -55,6 +55,7 @@ public class ActivityLogin extends Activity{
                     SharedPreferences.Editor editor = prefs.edit();
                     editor.putBoolean("logged", true);
                     editor.putString("user",mail.getText().toString());
+                    editor.putString("nome",result.getString("nome"));
                     user = UsuarioSingleton.getInstance();
                     user.setUsuario(mail.getText().toString());
                     user.setNome(result.getString("nome"));

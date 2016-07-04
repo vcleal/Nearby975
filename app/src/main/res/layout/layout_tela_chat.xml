@@ -42,10 +42,7 @@
                 android:layout_width="match_parent"
                 android:layout_height="wrap_content"
                 android:layout_margin="10dp"
-                android:text="BláBláBláBláBláBláBláBláBláBláBláBláBláBlá
-                BláBláBláBláBláBláBláBláBláBláBláBláBláBláBláBláBláBláBláBláBláBláBláBláBláBláBláBlá
-                BláBláBláBláBláBláBláBláBláBláBláBláBláBláBláBláBláBláBláBláBláBláBláBláBláBláBláBlá
-                BláBláBláBláBláBláBláBláBláBláBláBláBláBláBláBláBláBláBláBláBláBláBláBláBláBláBláBlá"
+                android:text=""
                 android:textColor="@color/colorPreto"
                 android:id="@+id/corpo_chat" />
 

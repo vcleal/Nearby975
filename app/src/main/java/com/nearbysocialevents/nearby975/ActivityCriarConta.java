@@ -52,6 +52,7 @@ public class ActivityCriarConta extends Activity{
     }
 
 //TODO  validar string com data de nascimento
+//TODO: FEITO  Conectar com o servidor.
     private boolean validaData(){
         return true;
     }

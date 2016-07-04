@@ -41,6 +41,7 @@ public class MainActivity extends Activity {
         isLogged = prefs.getBoolean("logged",false);
         if(isLogged){
             user.setUsuario(prefs.getString("user","ERRO_USUARIO"));
+            user.setNome(prefs.getString("nome","ERRO_USUARIO"));
             Intent intent = new Intent(this, ActivityTelaPrincipal.class);
             startActivity(intent);
             this.finish();

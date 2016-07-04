@@ -36,6 +36,7 @@ public class ActivityCriarEvento extends Activity {
 
 
     //TODO: validar formulario
+    //TODO: FEITO conectar com o servidor.
     /**
      * Validacao do formulario
      * @return
