@@ -1,12 +1,19 @@
 package com.nearbysocialevents.nearby975.MySql;
 
+import android.content.res.Resources;
+import android.graphics.BitmapFactory;
 import android.os.AsyncTask;
-import java.sql.ResultSet;
 import java.sql.SQLException;
 
+import android.util.Base64;
 import android.util.Log;
+import java.io.ByteArrayOutputStream;
+import android.graphics.Bitmap;
+import 	android.graphics.BitmapFactory;
+
 
 import com.nearbysocialevents.nearby975.MySql.dbMySQL;
+import com.nearbysocialevents.nearby975.R;
 
 /**
  * Created by BalaPC on 03-Jun-16.
@@ -51,6 +58,63 @@ public class UpdateMySql extends AsyncTask<String, Void, Integer> {
 
     public void naResposta(Integer result) throws SQLException {
         //De um override nesta função com as ações a serem executadas com a resposta do SQL
+    }
+
+
+    static public void sendPicture(Bitmap bitmap){
+        //Bitmap bitmap = BitmapFactory.decodeResource(getResources(),R.drawable.ic_launcher);
+        //Resources res = getContext().getResources();
+        //Bitmap bitmap = BitmapFactory.decodeResource(bitmap2, R.drawable.cadastro);
+        //System.out.println(bitmap.toString());
+
+        ByteArrayOutputStream stream = new ByteArrayOutputStream();
+        bitmap.compress(Bitmap.CompressFormat.PNG, 90, stream); //compress to which format you want.
+        byte [] byte_arr = stream.toByteArray();
+        String image_str = Base64.encodeToString(byte_arr, Base64.DEFAULT);
+        enviaImagemServidor(image_str);
+
+    }
+
+
+    static public void retrievePicture(int number){
+        //Bitmap bitmap = BitmapFactory.decodeResource(getResources(),R.drawable.ic_launcher);
+
+        /*
+        ByteArrayOutputStream stream = new ByteArrayOutputStream();
+        bitmap.compress(Bitmap.CompressFormat.PNG, 90, stream); //compress to which format you want.
+        byte [] byte_arr = stream.toByteArray();
+        String image_str = Base64.encodeToString(byte_arr, Base64.DEFAULT);
+        System.out.println(image_str);
+        */
+
+    }
+
+
+    static private boolean enviaImagemServidor(String img){
+        UpdateMySql job2;
+        job2 = new UpdateMySql(){
+            @Override
+            public void naResposta(Integer result) throws SQLException {
+                if(result > 0) {
+                    System.out.println("Foto Enviada");
+                }else{
+                    System.out.println("Foto não enviada");
+                }
+            }
+        };
+
+        String sql = "INSERT INTO fotos  (`dono`,`foto`) VALUES ('" +
+                "Felipe"+
+                "','" +
+                img +
+                "')";
+
+        //sql = "INSERT INTO usuario (`senha`) VALUES ('blablabla')";
+        job2.execute(sql);
+
+        //System.out.println("Chat_Mensagem_Enviada");
+
+        return true;
     }
 
 

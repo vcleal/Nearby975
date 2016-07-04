@@ -2,6 +2,7 @@ package com.nearbysocialevents.nearby975;
 
 import android.app.Activity;
 import android.content.Intent;
+import android.content.res.Resources;
 import android.database.Cursor;
 import android.graphics.Bitmap;
 import android.graphics.BitmapFactory;
@@ -11,6 +12,8 @@ import android.provider.MediaStore;
 import android.view.View;
 import android.widget.Button;
 import android.widget.ListView;
+
+import com.nearbysocialevents.nearby975.MySql.UpdateMySql;
 
 import java.util.ArrayList;
 import java.util.Date;
@@ -37,6 +40,7 @@ public class ActivityFotosEvento extends Activity {
         enviarFotos.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
+
                 Intent intent = new Intent();
 
                 intent.setType("image/*");
@@ -45,6 +49,10 @@ public class ActivityFotosEvento extends Activity {
                 startActivityForResult(
                         Intent.createChooser(intent, "Complete action using"),
                         1);
+
+                Bitmap bitmap = BitmapFactory.decodeResource(getApplicationContext().getResources(), R.drawable.logo);
+                UpdateMySql.sendPicture(bitmap);
+
 
             }
         });

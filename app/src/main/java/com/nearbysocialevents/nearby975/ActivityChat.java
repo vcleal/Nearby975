@@ -25,7 +25,7 @@ public class ActivityChat extends Activity {
 
     private UsuarioSingleton user = UsuarioSingleton.getInstance();
 
-    //TODO criar alocação do id_evento com o evento que a ActivityChat, necessita da lista de eventos pronta.
+    //TODO: criar alocação do id_evento com o evento que a ActivityChat, necessita da lista de eventos pronta.
     String id_evento = "5";
 
     SendMySql job1;
@@ -73,7 +73,7 @@ public class ActivityChat extends Activity {
         String sql = "INSERT INTO chat  (`autor`,`nome_evento`,`id_evento`,`mensagem`) VALUES ('" +
                 user.getNome()+
                 "','" +
-                newMessage.getText().toString() +
+                "EventoPadrao" + //TODO: corrigir isso com o nome do evento ou retirar do db.
                 "','" +
                 id_evento +
                 "','" +
