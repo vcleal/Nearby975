@@ -59,6 +59,7 @@ public class ActivityFotosEvento extends Activity {
                     @Override
                     public void recebeImagem(Bitmap imagem){
                         ImageView img = (ImageView) findViewById(R.id.imageView);
+                        img.setImageBitmap(imagem);
                     }
                 };
 
