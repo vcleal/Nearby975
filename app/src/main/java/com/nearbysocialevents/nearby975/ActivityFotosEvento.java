@@ -8,6 +8,7 @@ import android.graphics.Bitmap;
 import android.graphics.BitmapFactory;
 import android.net.Uri;
 import android.os.Bundle;
+import android.provider.DocumentsContract;
 import android.provider.MediaStore;
 import android.view.View;
 import android.widget.Button;
@@ -42,19 +43,27 @@ public class ActivityFotosEvento extends Activity {
             @Override
             public void onClick(View v) {
 
-                Intent intent = new Intent();
 
+                Intent intent = new Intent();
                 intent.setType("image/*");
                 intent.setAction(Intent.ACTION_GET_CONTENT);
-
                 startActivityForResult(
                         Intent.createChooser(intent, "Complete action using"),
                         1);
 
 
+                /*
+                Intent intent = new Intent(Intent.ACTION_GET_CONTENT);
+                intent.setType("image/*");
+                startActivityForResult(intent, 1);
+                */
+
+                //ENVIAR
                 //Bitmap bitmap = BitmapFactory.decodeResource(getApplicationContext().getResources(), R.drawable.logo);
                 //UpdateMySql.sendPicture(bitmap);
-
+                //
+                //RECEBER
+                /*
                 UpdateMySql tmp = new UpdateMySql(){
                     @Override
                     public void recebeImagem(Bitmap imagem){
@@ -62,8 +71,8 @@ public class ActivityFotosEvento extends Activity {
                         img.setImageBitmap(imagem);
                     }
                 };
-
                 UpdateMySql.retrievePicture(1, tmp);
+                */
 
             }
         });
@@ -71,23 +80,32 @@ public class ActivityFotosEvento extends Activity {
         list = (ListView) findViewById(R.id.list_fotos);   //pega referencia da lista
         fotos = new ArrayList<Foto>();
 
-        //TODO: preencher a lista 'fotos' do banco de dados
+        //TODO:FEITO preencher a lista 'fotos' do banco de dados
+        //TODO: Pegar o id do evento e passar para pegar as fotos.
+
+        UpdateMySql tmp = new UpdateMySql(){
+            @Override
+            public void recebeImagem(Bitmap imagem){
+                //ImageView img = (ImageView) findViewById(R.id.imageView);
+                //img.setImageBitmap(imagem);
+                fotos.add(new Foto(imagem));
+
+                mAdapter = new MyImageListAdapter(getApplicationContext(), fotos);
+                list.setAdapter(mAdapter);
+                mAdapter.notifyDataSetChanged();
+            }
+        };
+        UpdateMySql.retrievePicture(1, tmp);
 
 
 
-
-
-
-
-
-
-
-
-
-
-
+        //fotos.add(new Foto(BitmapFactory.decodeResource(getApplicationContext().getResources(), R.drawable.logo)));
+        /*
         this.mAdapter = new MyImageListAdapter(this, fotos);
         list.setAdapter(mAdapter);
+        mAdapter.notifyDataSetChanged();
+        */
+
 
     }
 
@@ -98,28 +116,59 @@ public class ActivityFotosEvento extends Activity {
         super.onActivityResult(requestCode, resultCode, imageReturnedIntent);
 
 
+        //TODO: filePath está vindo vazio
         if (resultCode == RESULT_OK) {
             Uri selectedImage = imageReturnedIntent.getData();
             String[] filePathColumn = {MediaStore.Images.Media.DATA};
 
-            Cursor cursor = getContentResolver().query(selectedImage, filePathColumn, null, null, null);
-            cursor.moveToFirst();
 
+            String wholeID = DocumentsContract.getDocumentId(selectedImage);
+            String id = wholeID.split(":")[1];
+            String sel = MediaStore.Images.Media._ID + "=?";
+            Cursor cursor = getContentResolver().query(MediaStore.Images.Media.EXTERNAL_CONTENT_URI,
+                    filePathColumn, sel, new String[]{ id }, null);
+            String filePath = "";
             int columnIndex = cursor.getColumnIndex(filePathColumn[0]);
-            String filePath = cursor.getString(columnIndex);
+            if (cursor.moveToFirst()) {
+                filePath = cursor.getString(columnIndex);
+            }
             cursor.close();
 
 
+
+            /*
+            System.out.println("FilePath--"+selectedImage.toString());
+            System.out.println("FilePathb--"+filePathColumn[0]);
+
+            Cursor cursor = getContentResolver().query(selectedImage, filePathColumn, null, null, null);
+            cursor.moveToFirst();
+
+            System.out.println("FilePath2--"+cursor.getString(0));
+
+            int columnIndex = cursor.getColumnIndex(filePathColumn[0]);
+
+            System.out.println("FilePath3--"+columnIndex);
+
+            String filePath = cursor.getString(columnIndex);
+            cursor.close();
+
+            System.out.println("FilePath4--"+filePath);
+
+            */
+
             Bitmap image = BitmapFactory.decodeFile(filePath);
+            //Bitmap image = BitmapFactory.decodeFile("com.android.providers.media.documents/document/image%3A38");
+
+            /*
             fotos.add(new Foto(image));
             this.mAdapter = new MyImageListAdapter(this, fotos);
             list.setAdapter(mAdapter);
             mAdapter.notifyDataSetChanged();    //recarrega a lista
 
+            */
+            //TODO:FEITO Enviar variavel 'image' para o servidor
 
-            //TODO: Enviar variavel 'image' para o servidor
-
-
+            //UpdateMySql.sendPicture(image);
 
         }
     }

@@ -111,7 +111,7 @@ public class UpdateMySql extends AsyncTask<String, Void, Integer> {
             }
         };
 
-        String sql = "SELECT * FROM fotos WHERE `id` = '"+ Integer.toString(id)+"'";
+        String sql = "SELECT * FROM fotos WHERE `evento_id` = '"+ Integer.toString(id)+"'";
         job1.execute(sql);
 
     }
