@@ -1,15 +1,20 @@
 package com.nearbysocialevents.nearby975;
 
+import android.Manifest;
 import android.app.Activity;
 import android.content.Intent;
+import android.content.pm.PackageManager;
 import android.content.res.Resources;
 import android.database.Cursor;
 import android.graphics.Bitmap;
 import android.graphics.BitmapFactory;
 import android.net.Uri;
 import android.os.Bundle;
+import android.os.Environment;
+import android.os.SystemClock;
 import android.provider.DocumentsContract;
 import android.provider.MediaStore;
+import android.provider.Settings;
 import android.view.View;
 import android.widget.Button;
 import android.widget.ImageView;
@@ -20,6 +25,8 @@ import com.nearbysocialevents.nearby975.MySql.UpdateMySql;
 import java.util.ArrayList;
 import java.util.Date;
 import java.util.List;
+
+import static java.security.AccessController.getContext;
 
 /**
  * Created by root on 6/26/16.
@@ -121,7 +128,24 @@ public class ActivityFotosEvento extends Activity {
             Uri selectedImage = imageReturnedIntent.getData();
             String[] filePathColumn = {MediaStore.Images.Media.DATA};
 
+            String path = Environment.getExternalStorageDirectory().getPath();
+            String myJpgPath = path + "/Download/download.jpg";
+            System.out.println("Diretorio Foto: "+myJpgPath);
 
+
+            if (android.os.Build.VERSION.SDK_INT >= android.os.Build.VERSION_CODES.M) {
+
+
+                int permissionCheck = getApplicationContext().checkSelfPermission(Manifest.permission.READ_EXTERNAL_STORAGE);
+                permissionCheck = getApplicationContext().checkSelfPermission(Manifest.permission.WRITE_EXTERNAL_STORAGE);
+                permissionCheck = getApplicationContext().checkCallingOrSelfPermission("android.permission.READ_EXTERNAL_STORAGE");
+                permissionCheck = getApplicationContext().checkCallingOrSelfUriPermission(selectedImage,Intent.FLAG_GRANT_READ_URI_PERMISSION);
+                permissionCheck = getApplicationContext().checkCallingOrSelfUriPermission(Uri.parse(myJpgPath),Intent.FLAG_GRANT_READ_URI_PERMISSION);
+            }
+
+
+
+            /*
             String wholeID = DocumentsContract.getDocumentId(selectedImage);
             String id = wholeID.split(":")[1];
             String sel = MediaStore.Images.Media._ID + "=?";
@@ -133,18 +157,35 @@ public class ActivityFotosEvento extends Activity {
                 filePath = cursor.getString(columnIndex);
             }
             cursor.close();
+*/
 
 
 
-            /*
             System.out.println("FilePath--"+selectedImage.toString());
             System.out.println("FilePathb--"+filePathColumn[0]);
 
-            Cursor cursor = getContentResolver().query(selectedImage, filePathColumn, null, null, null);
-            cursor.moveToFirst();
+            //Cursor cursor = getContentResolver().query(selectedImage, filePathColumn, null, null, null);
+            Cursor cursor = getContentResolver().query(selectedImage, null, null, null, null);
+
+
+            if (!cursor.moveToFirst()){System.out.println("Cursor Vazio");}
+
+
+            System.out.println("FilePathw--"+cursor.getColumnName(0));
+            System.out.println("FilePathw--"+cursor.getColumnName(1));
+            System.out.println("FilePathw--"+cursor.getColumnName(2));
+            System.out.println("FilePathw--"+cursor.getColumnName(3));
+            System.out.println("FilePathw--"+cursor.getColumnName(4));
+            System.out.println("FilePathw--"+cursor.getColumnName(5));
 
             System.out.println("FilePath2--"+cursor.getString(0));
+            System.out.println("FilePath2--"+cursor.getString(1));
+            System.out.println("FilePath2--"+cursor.getString(2));
+            System.out.println("FilePath2--"+cursor.getString(3));
+            System.out.println("FilePath2--"+cursor.getString(4));
+            System.out.println("FilePath2--"+cursor.getString(5));
 
+            /*
             int columnIndex = cursor.getColumnIndex(filePathColumn[0]);
 
             System.out.println("FilePath3--"+columnIndex);
@@ -153,10 +194,16 @@ public class ActivityFotosEvento extends Activity {
             cursor.close();
 
             System.out.println("FilePath4--"+filePath);
+*/
 
-            */
 
-            Bitmap image = BitmapFactory.decodeFile(filePath);
+            //String a = Environment.getExternalStorageDirectory() + "/" + Environment.DIRECTORY_DCIM + "/";
+            //String a = Environment.getExternalStoragePublicDirectory(Environment.DIRECTORY_PICTURES).getAbs‌​olutePath();;
+
+
+
+            Bitmap image = BitmapFactory.decodeFile(myJpgPath);
+            System.out.println(image.toString());
             //Bitmap image = BitmapFactory.decodeFile("com.android.providers.media.documents/document/image%3A38");
 
             /*
