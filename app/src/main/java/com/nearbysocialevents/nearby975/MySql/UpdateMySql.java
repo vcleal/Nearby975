@@ -1,15 +1,23 @@
 package com.nearbysocialevents.nearby975.MySql;
 
 import android.content.res.Resources;
+
 import android.graphics.BitmapFactory;
 import android.os.AsyncTask;
+
+import java.sql.ResultSet;
 import java.sql.SQLException;
 
 import android.util.Base64;
 import android.util.Log;
 import java.io.ByteArrayOutputStream;
+import java.util.concurrent.ExecutionException;
+import java.util.concurrent.TimeUnit;
+import java.util.concurrent.TimeoutException;
+
 import android.graphics.Bitmap;
 import 	android.graphics.BitmapFactory;
+import android.widget.ImageView;
 
 
 import com.nearbysocialevents.nearby975.MySql.dbMySQL;
@@ -61,6 +69,9 @@ public class UpdateMySql extends AsyncTask<String, Void, Integer> {
     }
 
 
+
+    /////////////////////////////////////////////////////////////////
+
     static public void sendPicture(Bitmap bitmap){
         //Bitmap bitmap = BitmapFactory.decodeResource(getResources(),R.drawable.ic_launcher);
         //Resources res = getContext().getResources();
@@ -72,20 +83,43 @@ public class UpdateMySql extends AsyncTask<String, Void, Integer> {
         byte [] byte_arr = stream.toByteArray();
         String image_str = Base64.encodeToString(byte_arr, Base64.DEFAULT);
         enviaImagemServidor(image_str);
+    }
+
+    static public Bitmap foto;
+    //static public int adfoto;
+
+    static public void retrievePicture(int id, final UpdateMySql tmp){
+
+        //////////////
+        SendMySql job1;
+        job1 = new SendMySql(){
+            @Override
+            public void naResposta(ResultSet result) throws SQLException {
+                if(result.next()) {
+                    result.first();
+                    //UpdateMySql tmp = new UpdateMySql();
+                    System.out.println("Foto recebida");
+                    String imagem = result.getString("foto");
+                    byte [] byte_arr = Base64.decode(imagem,Base64.DEFAULT);
+                    Bitmap bitmap = BitmapFactory.decodeByteArray(byte_arr , 0, byte_arr .length);
+                    UpdateMySql.foto = bitmap;
+                    tmp.recebeImagem(bitmap);
+                    System.out.println("Imagem Recebida e convertida em bitmap");
+                }else{
+                    System.out.println("Foto não recebida");
+                }
+            }
+        };
+
+        String sql = "SELECT * FROM fotos WHERE `id` = '"+ Integer.toString(id)+"'";
+        job1.execute(sql);
 
     }
 
+    public void recebeImagem(Bitmap imagem){
 
-    static public void retrievePicture(int number){
-        //Bitmap bitmap = BitmapFactory.decodeResource(getResources(),R.drawable.ic_launcher);
-
-        /*
-        ByteArrayOutputStream stream = new ByteArrayOutputStream();
-        bitmap.compress(Bitmap.CompressFormat.PNG, 90, stream); //compress to which format you want.
-        byte [] byte_arr = stream.toByteArray();
-        String image_str = Base64.encodeToString(byte_arr, Base64.DEFAULT);
-        System.out.println(image_str);
-        */
+        //ImageView img = R.findViewById(R.id.imageView);
+        //img.setImageBitmap(imagem);
 
     }
 
@@ -109,13 +143,8 @@ public class UpdateMySql extends AsyncTask<String, Void, Integer> {
                 img +
                 "')";
 
-        //sql = "INSERT INTO usuario (`senha`) VALUES ('blablabla')";
         job2.execute(sql);
-
-        //System.out.println("Chat_Mensagem_Enviada");
-
         return true;
     }
-
 
 }

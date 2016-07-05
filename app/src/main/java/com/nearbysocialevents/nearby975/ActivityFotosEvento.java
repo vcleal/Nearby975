@@ -11,6 +11,7 @@ import android.os.Bundle;
 import android.provider.MediaStore;
 import android.view.View;
 import android.widget.Button;
+import android.widget.ImageView;
 import android.widget.ListView;
 
 import com.nearbysocialevents.nearby975.MySql.UpdateMySql;
@@ -50,9 +51,18 @@ public class ActivityFotosEvento extends Activity {
                         Intent.createChooser(intent, "Complete action using"),
                         1);
 
-                Bitmap bitmap = BitmapFactory.decodeResource(getApplicationContext().getResources(), R.drawable.logo);
-                UpdateMySql.sendPicture(bitmap);
 
+                //Bitmap bitmap = BitmapFactory.decodeResource(getApplicationContext().getResources(), R.drawable.logo);
+                //UpdateMySql.sendPicture(bitmap);
+
+                UpdateMySql tmp = new UpdateMySql(){
+                    @Override
+                    public void recebeImagem(Bitmap imagem){
+                        ImageView img = (ImageView) findViewById(R.id.imageView);
+                    }
+                };
+
+                UpdateMySql.retrievePicture(1, tmp);
 
             }
         });
