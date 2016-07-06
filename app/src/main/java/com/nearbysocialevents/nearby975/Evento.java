@@ -70,6 +70,20 @@ public class Evento implements Serializable{
 
     }
 
+    public Evento(String id,String nome2, float preco2, Date data2, String local2,String descricao2,String dono){
+        nome=nome2;
+        preco = preco2;
+        data=data2;
+        descricao = descricao2;
+        local = local2;
+        ingressosDisponiveisParaCompra = 20;
+        owner=dono;
+        atendentes = new ArrayList<String>();
+
+    }
+
+
+
     public Evento(String nome2, double preco2, Date data2){
         nome=nome2;
         preco = preco2;

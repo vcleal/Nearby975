@@ -85,7 +85,8 @@ public class MyListAdapter extends ArrayAdapter<Evento> {
         }
         holder.name.setText(allEvents.get(position).nome);
         holder.data.setText(df.format(allEvents.get(position).data));
-        holder.preco.setText(Double.toString(allEvents.get(position).preco));
+        holder.preco.setText("R$"+Double.toString(allEvents.get(position).preco));
+        holder.distancia.setText(allEvents.get(position).local);
         holder.pos = position;
         return convertView;
     }
