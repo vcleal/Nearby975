@@ -88,8 +88,7 @@ public class ActivityFotosEvento extends Activity {
         list = (ListView) findViewById(R.id.list_fotos);   //pega referencia da lista
         fotos = new ArrayList<Foto>();
 
-        //TODO:FEITO preencher a lista 'fotos' do banco de dados
-        //TODO: Pegar o id do evento e passar para pegar as fotos.
+
 
         UpdateMySql tmp = new UpdateMySql(){
             @Override
@@ -152,7 +151,7 @@ public class ActivityFotosEvento extends Activity {
             mAdapter.notifyDataSetChanged();    //recarrega a lista
 
             */
-            //TODO:FEITO Enviar variavel 'image' para o servidor
+
 
             //UpdateMySql.sendPicture(image);
 

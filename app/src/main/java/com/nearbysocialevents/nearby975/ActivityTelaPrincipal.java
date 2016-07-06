@@ -49,7 +49,7 @@ public class ActivityTelaPrincipal extends Activity{
          * preencher nome do usuario e foto
          */
         //TODO: preencher foto
-
+        fotoUsuario.setImageResource(R.drawable.blueuser);
         nomeUsuario.setText(user.getNome());
 
 

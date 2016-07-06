@@ -20,7 +20,8 @@
             android:layout_width="100dp"
             android:layout_height="100dp"
             android:id="@+id/image_user_button"
-            android:background="@android:drawable/ic_menu_camera" />
+            android:layout_margin="10dp"
+            android:scaleType="fitXY"/>
 
         <TextView android:layout_width="wrap_content" android:layout_height="wrap_content"
             android:id="@+id/text_nome"
@@ -31,6 +32,7 @@
     <View
         android:layout_width="match_parent"
         android:layout_height="1dp"
+
         android:background="@android:color/darker_gray"/>
 
     <ScrollView

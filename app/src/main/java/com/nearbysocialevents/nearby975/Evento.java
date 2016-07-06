@@ -56,7 +56,7 @@ public class Evento implements Serializable{
 
 
 
-    //TODO: Arrumar este construtor ou fazer outros
+
     public Evento(int id2,String nome2, float preco2, Date data2, float distancia2){
         this.id = id2;
         nome=nome2;

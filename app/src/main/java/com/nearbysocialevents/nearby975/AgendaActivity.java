@@ -40,7 +40,7 @@ public class AgendaActivity extends Activity {
         list = (ListView) findViewById(R.id.listViewAgenda);   //pega referencia da lista
 
 
-        //TODO: preencher a lista 'eventos' do banco de dados
+
 
         job1 = new SendMySql() {
             @Override

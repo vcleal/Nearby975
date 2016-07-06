@@ -1,6 +1,7 @@
 package com.nearbysocialevents.nearby975;
 
 import android.app.Activity;
+import android.content.Context;
 import android.content.Intent;
 import android.database.Cursor;
 import android.graphics.Bitmap;
@@ -17,6 +18,7 @@ import android.widget.Toast;
 
 import com.nearbysocialevents.nearby975.MySql.UpdateMySql;
 
+import java.io.ByteArrayOutputStream;
 import java.sql.SQLException;
 
 /**
@@ -47,6 +49,23 @@ public class ActivityCriarEvento extends Activity {
         return true;
     }
 
+    public static Bitmap scaleDown(Bitmap realImage, float maxImageSize,
+                                   boolean filter) {
+        float ratio = Math.min(
+                (float) maxImageSize / realImage.getWidth(),
+                (float) maxImageSize / realImage.getHeight());
+        int width = Math.round((float) ratio * realImage.getWidth());
+        int height = Math.round((float) ratio * realImage.getHeight());
+
+        Bitmap newBitmap = Bitmap.createScaledBitmap(realImage, width,
+                height, filter);
+        return newBitmap;
+    }
+
+    Context ctx;
+    Bitmap image;
+
+
 
 
     private void chamaToast(String var){
@@ -60,7 +79,7 @@ public class ActivityCriarEvento extends Activity {
             public void naResposta(Integer result) throws SQLException {
                 if(result > 0) {
                     chamaToast("Evento criado com sucesso !!!");
-                    finish();
+                    ((Activity)ctx).finish();
                 }else{
                     chamaToast("Ocorreu um erro !!! Tente de novo");
                 }
@@ -68,22 +87,48 @@ public class ActivityCriarEvento extends Activity {
         };
 
         UsuarioSingleton user = UsuarioSingleton.getInstance();
+        String sql;
+        if(image==null){
+            sql = "INSERT INTO eventos  (`nome_evento`,`nome_dono`,`data_dia`,`data_hora`,`preco`,`local`,`descricao`) VALUES ('" +
+                    edtNomeEvento.getText().toString()+
+                    "','" +
+                    user.getUsuario() +
+                    "','" +
+                    edtDataEvento.getText().toString() +
+                    "','" +
+                    edtHoraEvento.getText().toString() +
+                    "','" +
+                    edtPrecoIngresso.getText().toString() +
+                    "','" +
+                    edtLocalEvento.getText().toString() +
+                    "','" +
+                    edtDescricao.getText().toString() +
 
-        String sql = "INSERT INTO eventos  (`nome_evento`,`nome_dono`,`data_dia`,`data_hora`,`preco`,`local`,`descricao` ) VALUES ('" +
-                edtNomeEvento.getText().toString()+
-                "','" +
-                user.getUsuario() +
-                "','" +
-                edtDataEvento.getText().toString() +
-                "','" +
-                edtHoraEvento.getText().toString() +
-                "','" +
-                edtPrecoIngresso.getText().toString() +
-                "','" +
-                edtLocalEvento.getText().toString() +
-                "','" +
-                edtDescricao.getText().toString() +
-                "')";
+                    "')";
+        }else{
+            Bitmap image2 = scaleDown(image,400,true);
+            ByteArrayOutputStream baos = new ByteArrayOutputStream();
+            image2.compress(Bitmap.CompressFormat.PNG,90,baos);
+            byte [] b = baos.toByteArray();
+            sql = "INSERT INTO eventos  (`nome_evento`,`nome_dono`,`data_dia`,`data_hora`,`preco`,`local`,`descricao`,`foto` ) VALUES ('" +
+                    edtNomeEvento.getText().toString()+
+                    "','" +
+                    user.getUsuario() +
+                    "','" +
+                    edtDataEvento.getText().toString() +
+                    "','" +
+                    edtHoraEvento.getText().toString() +
+                    "','" +
+                    edtPrecoIngresso.getText().toString() +
+                    "','" +
+                    edtLocalEvento.getText().toString() +
+                    "','" +
+                    edtDescricao.getText().toString() +
+                    "','" +
+                    b +
+                    "')";
+        }
+
 
         job1.execute(sql);
         chamaToast("Criando Evento .....");
@@ -92,7 +137,6 @@ public class ActivityCriarEvento extends Activity {
 
         return true;
     }
-
 
 
     protected void onActivityResult(int requestCode, int resultCode, Intent imageReturnedIntent) {
@@ -111,7 +155,7 @@ public class ActivityCriarEvento extends Activity {
             cursor.close();
 
 
-            Bitmap image = BitmapFactory.decodeFile(filePath);
+            image = BitmapFactory.decodeFile(filePath);
             imbFotoEvento.setImageBitmap(image);
 
 
@@ -134,7 +178,7 @@ public class ActivityCriarEvento extends Activity {
         edtHoraEvento = (EditText) findViewById(R.id.horaEvento);
         edtDescricao = (EditText) findViewById(R.id.descricaoEvento);
         btnCriarEvento = (Button) findViewById(R.id.button_conf_create_event);
-
+        ctx = this;
 
 
 

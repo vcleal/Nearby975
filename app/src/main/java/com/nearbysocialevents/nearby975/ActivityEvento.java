@@ -6,6 +6,8 @@ import android.content.Context;
 import android.content.DialogInterface;
 import android.content.Intent;
 import android.content.SharedPreferences;
+import android.graphics.Bitmap;
+import android.graphics.BitmapFactory;
 import android.os.Bundle;
 import android.text.Editable;
 import android.text.format.DateFormat;
@@ -13,6 +15,7 @@ import android.util.Log;
 import android.view.View;
 import android.widget.Button;
 import android.widget.EditText;
+import android.widget.ImageView;
 import android.widget.TextView;
 import android.widget.Toast;
 
@@ -41,6 +44,7 @@ public class ActivityEvento extends Activity{
     Button btnGerenciarEvento;
     Button btnEnviarIngresso;
     Button btnOpenChat;
+    ImageView fotoCapa;
     Button btnOpenFotos;
     Button btnValidarIngresso;
     Button btnVerIngresso;
@@ -159,6 +163,34 @@ public class ActivityEvento extends Activity{
         return false;
     }
 
+    SendMySql job6;
+    private boolean carregaFotoCapa(){
+        job6 = new SendMySql() {
+            @Override
+            public void naResposta(ResultSet result) throws SQLException {
+                if(!result.next()){
+                    fotoCapa.setVisibility(View.GONE);
+                    return;
+                }else{
+                    byte byte_arr[] = result.getString("foto").getBytes();
+                    Bitmap bitmap = BitmapFactory.decodeByteArray(byte_arr , 0, byte_arr .length);
+                    fotoCapa.setImageBitmap(bitmap);
+
+                }
+
+
+            }
+        };
+        job6.execute("SELECT * FROM eventos WHERE id = '"+event.getId()+"'" );
+
+
+
+
+        return false;
+    }
+
+
+
 
     private void souAtendente(){
         job1 = new SendMySql() {
@@ -198,6 +230,7 @@ public class ActivityEvento extends Activity{
         txtHoraEvento = (TextView)findViewById(R.id.hora);
         txtEnderecoEvento = (TextView)findViewById(R.id.endereco);
         txtPrecoEvento = (TextView)findViewById(R.id.preco);
+        fotoCapa = (ImageView)findViewById(R.id.imagem_capa_evento);
         txtDescricaoEvento = (TextView)findViewById(R.id.descricao);
         btnComprarIngresso = (Button)findViewById(R.id.button_comprar_ingresso);
         btnGerenciarEvento = (Button)findViewById(R.id.button_gerenciar);
@@ -247,7 +280,7 @@ public class ActivityEvento extends Activity{
         txtEnderecoEvento.setText(event.local);
         txtHoraEvento.setText(DateFormat.format("dd/MM/yyyy - hh:mm",event.data).toString());
 
-
+        //carregaFotoCapa();
         /**
          * COMPRAR INGRESSO
          */
