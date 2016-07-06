@@ -100,7 +100,8 @@ public class ActivityTelaPrincipal extends Activity{
         fotoUsuario.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
-                Intent intent = new Intent(v.getContext(), ActivityAlterarDadosPessoais.class);
+                Intent intent = new Intent(v.getContext(), ActivityCriarConta.class);
+                intent.putExtra("is_editing",true);
                 startActivity(intent);
             }
         });

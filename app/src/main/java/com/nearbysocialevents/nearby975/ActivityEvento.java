@@ -2,18 +2,27 @@ package com.nearbysocialevents.nearby975;
 
 import android.app.Activity;
 import android.app.AlertDialog;
+import android.content.Context;
 import android.content.DialogInterface;
 import android.content.Intent;
+import android.content.SharedPreferences;
 import android.os.Bundle;
 import android.text.Editable;
 import android.text.format.DateFormat;
+import android.util.Log;
 import android.view.View;
 import android.widget.Button;
 import android.widget.EditText;
 import android.widget.TextView;
 import android.widget.Toast;
 
+import com.nearbysocialevents.nearby975.MySql.SendMySql;
+import com.nearbysocialevents.nearby975.MySql.UpdateMySql;
+
 import org.w3c.dom.Text;
+
+import java.sql.ResultSet;
+import java.sql.SQLException;
 
 /**
  * Created by root on 6/25/16.
@@ -22,10 +31,11 @@ public class ActivityEvento extends Activity{
     Evento event;
     UsuarioSingleton currentUser = UsuarioSingleton.getInstance();
     TextView txtNomeEvento;
-
+    TextView txtNumIngressos;
     TextView txtEnderecoEvento;
     TextView txtHoraEvento;
     TextView txtPrecoEvento;
+    TextView txtNumAmigos;
     TextView txtDescricaoEvento;
     Button btnComprarIngresso;
     Button btnGerenciarEvento;
@@ -36,7 +46,8 @@ public class ActivityEvento extends Activity{
     Button btnVerIngresso;
     UsuarioSingleton user;
     AlertDialog.Builder alert;
-
+    Context ctx;
+    UpdateMySql job2;
 
     /**
      * Realiza a transferencia no servidor
@@ -45,23 +56,128 @@ public class ActivityEvento extends Activity{
     private boolean enviarIngressoParaOutroUsuario(String usuarioDestino){
         String identificadorEvento = event.nome;
         String identificadorUsuario = user.getUsuario();
+        job2 = new UpdateMySql(){
+            @Override
+            public void naResposta(Integer result) throws SQLException {
+                if(result > 0) {
+                    //          Toast.makeText(ctx,"deu certo",Toast.LENGTH_SHORT).show();
 
-        //TODO Enviar para servidor e verificar se deu certo
+                        Toast.makeText(alert.getContext(), "Ingresso enviado com sucesso!", Toast.LENGTH_LONG).show();
+                    contarIngressos();
+                    contarAmigos();
+
+                }else{
+                    //chamaToast("Ocorreu um erro !!! Tente de novo");
+                    //        Toast.makeText(ctx,"nao deu certo",Toast.LENGTH_SHORT).show();
+                    Toast.makeText(alert.getContext(), "Falha ao enviar Ingresso. Verifique se voce possui ingressos.", Toast.LENGTH_LONG).show();
+                }
+            }
+        };
+
+        String sql = "UPDATE ingressos SET nome_dono = '"+usuarioDestino+"' WHERE nome_dono = '"+UsuarioSingleton.getInstance().getUsuario()+"' AND nome_evento = "+event.getId()+" LIMIT 1";
+
+
+        job2.execute(sql);
+        Toast.makeText(alert.getContext(), "Enviando Ingresso...", Toast.LENGTH_LONG).show();
+
 
         return true;
     }
 
+    SendMySql job3;
+    private void contarIngressos(){
 
+        job3 = new SendMySql() {
+            @Override
+            public void naResposta(ResultSet result) throws SQLException {
+                int counter = 0;
+                while(result.next()){
+                    counter++;
+                }
+                txtNumIngressos.setText(Integer.toString(counter));
+
+
+            }
+        };
+        job3.execute("SELECT * FROM ingressos WHERE nome_dono = '"+UsuarioSingleton.getInstance().getUsuario()+"' AND nome_evento = "+event.getId() );
+
+    }
+
+
+    SendMySql job4;
+    private void contarAmigos(){
+
+        job4 = new SendMySql() {
+            @Override
+            public void naResposta(ResultSet result) throws SQLException {
+                int counter = 0;
+                while(result.next()){
+                    counter++;
+                }
+                txtNumAmigos.setText(Integer.toString(counter));
+
+
+            }
+        };
+        job4.execute("SELECT * FROM ingressos WHERE nome_dono = (SELECT contato FROM contatos WHERE usuario = '"+UsuarioSingleton.getInstance().getUsuario()+"' ) AND nome_evento = "+event.getId() );
+
+
+    }
+
+
+
+    SendMySql job5;
     private boolean euTenhoIngresso(){
-        String meuUsuario = user.getUsuario();
-        String nomeEvento = event.nome;
-        //TODO: Verifcar se eu tenho ingresso pra esse evento
+        job5 = new SendMySql() {
+            @Override
+            public void naResposta(ResultSet result) throws SQLException {
+                if(!result.next()){
 
-        return true;
+                    return;
+                }else{
+                    btnOpenFotos.setVisibility(View.VISIBLE);
+                    btnOpenFotos.setEnabled(true);
+                    btnOpenChat.setVisibility(View.VISIBLE);
+                    btnOpenChat.setEnabled(true);
+
+                    btnEnviarIngresso.setVisibility(View.VISIBLE);
+                    btnEnviarIngresso.setEnabled(true);
+
+                    btnVerIngresso.setVisibility(View.VISIBLE);
+                    btnVerIngresso.setEnabled(true);
+
+                }
+
+
+            }
+        };
+        job5.execute("SELECT * FROM ingressos WHERE nome_dono = '"+UsuarioSingleton.getInstance().getUsuario()+"' AND nome_evento = "+event.getId() );
+
+
+
+
+        return false;
     }
 
 
+    private void souAtendente(){
+        job1 = new SendMySql() {
+            @Override
+            public void naResposta(ResultSet result) throws SQLException {
+                if(!result.next()){
 
+                    return;
+                }else{
+                    btnValidarIngresso.setVisibility(View.VISIBLE);
+                    btnValidarIngresso.setEnabled(true);
+                }
+
+
+            }
+        };
+        job1.execute("SELECT * FROM atendentes WHERE usuario_atendente = '"+UsuarioSingleton.getInstance().getUsuario()+"'" );
+
+    }
 
 
 
@@ -75,7 +191,10 @@ public class ActivityEvento extends Activity{
         event = (Evento) getIntent().getSerializableExtra("evento");
         alert= new AlertDialog.Builder(this);
         user = UsuarioSingleton.getInstance();
+        ctx = this;
+        txtNumIngressos = (TextView) findViewById(R.id.txt_num_ingressos);
         txtNomeEvento = (TextView)findViewById(R.id.event_name);
+        txtNumAmigos = (TextView)findViewById(R.id.num_amigos);
         txtHoraEvento = (TextView)findViewById(R.id.hora);
         txtEnderecoEvento = (TextView)findViewById(R.id.endereco);
         txtPrecoEvento = (TextView)findViewById(R.id.preco);
@@ -87,8 +206,9 @@ public class ActivityEvento extends Activity{
         btnOpenFotos = (Button)findViewById(R.id.button_fotos);
         btnValidarIngresso = (Button)findViewById(R.id.button_validar);
         btnVerIngresso = (Button) findViewById(R.id.button_ver_ingresso);
-
-
+        contarIngressos();
+        contarAmigos();
+        Toast.makeText(this,"Aguarde. Carregando Informacoes...",Toast.LENGTH_LONG).show();
         /**
          * se eu nao for o dono, nao posso gerenciar
          */
@@ -104,20 +224,22 @@ public class ActivityEvento extends Activity{
             btnValidarIngresso.setEnabled(false);
         }
 
-        /**
-         * se eu nao tenho ingresso, nao posso ve-lo nem envia-lo
-         */
-        if(!euTenhoIngresso()){
-            btnVerIngresso.setVisibility(View.INVISIBLE);
-            btnVerIngresso.setEnabled(false);
-            btnEnviarIngresso.setVisibility(View.INVISIBLE);
-            btnEnviarIngresso.setEnabled(false);
-
-        }
 
 
+        souAtendente();
 
+        btnOpenChat.setVisibility(View.INVISIBLE);
+        btnOpenChat.setEnabled(false);
+        btnOpenFotos.setVisibility(View.INVISIBLE);
+        btnOpenFotos.setEnabled(false);
 
+        btnEnviarIngresso.setVisibility(View.INVISIBLE);
+        btnEnviarIngresso.setEnabled(false);
+
+        btnVerIngresso.setVisibility(View.INVISIBLE);
+        btnVerIngresso.setEnabled(false);
+
+        euTenhoIngresso();
 
         txtNomeEvento.setText(event.nome);
         txtDescricaoEvento.setText(event.descricao);
@@ -132,6 +254,28 @@ public class ActivityEvento extends Activity{
         btnComprarIngresso.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
+                UpdateMySql job2;
+                job2 = new UpdateMySql(){
+                    @Override
+                    public void naResposta(Integer result) throws SQLException {
+                        if(result > 0) {
+
+                            contarIngressos();
+                            euTenhoIngresso();
+                        }else{
+
+                        }
+                    }
+                };
+
+                String sql = "INSERT INTO ingressos  (`nome_evento`,`nome_dono`) VALUES ('" +
+                        event.getId()+
+                        "','" +
+                        UsuarioSingleton.getInstance().getUsuario()+
+                        "')";
+                job2.execute(sql);
+
+
                 new AlertDialog.Builder(v.getContext())
                         .setTitle("Aviso")
                         .setMessage("Funcionalidade de pagamento nao implementada pois nao tivemos acesso liberado a API de pagamentos do google ainda. O ingresso foi adiconado a sua conta com sucesso!")
@@ -141,7 +285,8 @@ public class ActivityEvento extends Activity{
                             }
                         })
                         .show();
-                        //TODO: Adicionar ingresso para o evento a conta do usuario atual no servidor
+
+
 
 
             }
@@ -176,16 +321,8 @@ public class ActivityEvento extends Activity{
                     public void onClick(DialogInterface dialog, int whichButton) {
                         String usuarioParaEnviar = edittext.getText().toString();
 
+                        enviarIngressoParaOutroUsuario(usuarioParaEnviar);
 
-                        if(enviarIngressoParaOutroUsuario(usuarioParaEnviar)){
-                            Toast.makeText(alert.getContext(), "Ingresso enviado com sucesso!", Toast.LENGTH_LONG).show();
-
-
-                        }else{
-                            Toast.makeText(alert.getContext(), "Falha no envio do Ingresso. Verifique conexao com a internet.", Toast.LENGTH_LONG).show();
-
-
-                        }
 
 
                     }
@@ -210,6 +347,7 @@ public class ActivityEvento extends Activity{
             public void onClick(View v) {
                 Intent intent = new Intent(v.getContext(), ActivityChat.class);
                 intent.putExtra("evento_id",event.getId());
+                intent.putExtra("evento_nome",event.nome);
                 startActivity(intent);
             }
         });
@@ -224,6 +362,7 @@ public class ActivityEvento extends Activity{
             public void onClick(View v) {
                 Intent intent = new Intent(v.getContext(), ActivityFotosEvento.class);
                 intent.putExtra("evento_id",event.getId());
+
                 startActivity(intent);
             }
         });
@@ -248,16 +387,47 @@ public class ActivityEvento extends Activity{
         btnVerIngresso.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
-                Intent intent = new Intent(v.getContext(), ActivityVerIngresso.class);
-                //TODO:Pegar o ID do ingresso e jogar na variavel abaixo:
-                String ingressoId = "12345678";
-                intent.putExtra("ingresso_id",ingressoId);
-                intent.putExtra("evento_id",event.getId());
-                startActivity(intent);
+                abrirIngresso();
 
             }
         });
 
 
     }
+
+    SendMySql job1;
+    private void abrirIngresso(){
+        Toast.makeText(ctx,"Buscando Ingresso...",Toast.LENGTH_LONG).show();
+        job1 = new SendMySql() {
+            @Override
+            public void naResposta(ResultSet result) throws SQLException {
+                if(!result.next()){
+                    //nao retornou nada
+                    Toast.makeText(ctx,"Ingresso inexistente",Toast.LENGTH_LONG).show();
+                    return;
+                }else{
+                    Intent intent = new Intent(ctx, ActivityVerIngresso.class);
+
+                    String ingressoId = Integer.toString(result.getInt("id"));
+                    intent.putExtra("ingresso_id",ingressoId);
+                    intent.putExtra("evento_id",event.getId());
+                    startActivity(intent);
+                }
+
+
+            }
+        };
+        job1.execute("SELECT * FROM ingressos WHERE nome_dono = '"+UsuarioSingleton.getInstance().getUsuario() + "' AND  nome_evento = '"+event.getId() +"'");
+        System.out.println("Login_execute");
+
+
+
+
+
+
+
+    }
+
+
+
 }

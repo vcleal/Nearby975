@@ -2,6 +2,7 @@ package com.nearbysocialevents.nearby975;
 
 import android.Manifest;
 import android.app.Activity;
+import android.content.Context;
 import android.content.Intent;
 import android.content.pm.PackageManager;
 import android.content.res.Resources;
@@ -19,6 +20,7 @@ import android.view.View;
 import android.widget.Button;
 import android.widget.ImageView;
 import android.widget.ListView;
+import android.widget.Toast;
 
 import com.nearbysocialevents.nearby975.MySql.UpdateMySql;
 
@@ -37,12 +39,15 @@ public class ActivityFotosEvento extends Activity {
     MyImageListAdapter mAdapter;
     Button enviarFotos;
     ListView list;
+    int event_id;
+    Context ctx;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.layout_compartilha_foto);
-
+        event_id = getIntent().getIntExtra("evento_id",0);
+        ctx = this;
         enviarFotos = (Button)findViewById(R.id.button_enviar_foto);
 
 
@@ -59,11 +64,7 @@ public class ActivityFotosEvento extends Activity {
                         1);
 
 
-                /*
-                Intent intent = new Intent(Intent.ACTION_GET_CONTENT);
-                intent.setType("image/*");
-                startActivityForResult(intent, 1);
-                */
+
 
                 //ENVIAR
                 //Bitmap bitmap = BitmapFactory.decodeResource(getApplicationContext().getResources(), R.drawable.logo);
@@ -93,8 +94,7 @@ public class ActivityFotosEvento extends Activity {
         UpdateMySql tmp = new UpdateMySql(){
             @Override
             public void recebeImagem(Bitmap imagem){
-                //ImageView img = (ImageView) findViewById(R.id.imageView);
-                //img.setImageBitmap(imagem);
+
                 fotos.add(new Foto(imagem));
 
                 mAdapter = new MyImageListAdapter(getApplicationContext(), fotos);
@@ -102,108 +102,47 @@ public class ActivityFotosEvento extends Activity {
                 mAdapter.notifyDataSetChanged();
             }
         };
-        UpdateMySql.retrievePicture(1, tmp);
+        UpdateMySql.retrievePicture(event_id, tmp);
 
-
-
-        //fotos.add(new Foto(BitmapFactory.decodeResource(getApplicationContext().getResources(), R.drawable.logo)));
-        /*
-        this.mAdapter = new MyImageListAdapter(this, fotos);
-        list.setAdapter(mAdapter);
-        mAdapter.notifyDataSetChanged();
-        */
+        Toast.makeText(ctx,"Carregando Fotos...",Toast.LENGTH_SHORT).show();
 
 
     }
 
+    public static Bitmap scaleDown(Bitmap realImage, float maxImageSize,
+                                   boolean filter) {
+        float ratio = Math.min(
+                (float) maxImageSize / realImage.getWidth(),
+                (float) maxImageSize / realImage.getHeight());
+        int width = Math.round((float) ratio * realImage.getWidth());
+        int height = Math.round((float) ratio * realImage.getHeight());
 
+        Bitmap newBitmap = Bitmap.createScaledBitmap(realImage, width,
+                height, filter);
+        return newBitmap;
+    }
 
 
     protected void onActivityResult(int requestCode, int resultCode, Intent imageReturnedIntent) {
         super.onActivityResult(requestCode, resultCode, imageReturnedIntent);
 
 
-        //TODO: filePath está vindo vazio
+
         if (resultCode == RESULT_OK) {
             Uri selectedImage = imageReturnedIntent.getData();
-            String[] filePathColumn = {MediaStore.Images.Media.DATA};
 
-            String path = Environment.getExternalStorageDirectory().getPath();
-            String myJpgPath = path + "/Download/download.jpg";
-            System.out.println("Diretorio Foto: "+myJpgPath);
+            try{
+                Bitmap image = MediaStore.Images.Media.getBitmap(ctx.getContentResolver(),selectedImage);
+                image = scaleDown(image,400,true);
+                //ENVIAR
+                UpdateMySql.sendPicture(image,event_id);
+                Toast.makeText(ctx,"Enviando Foto...",Toast.LENGTH_SHORT).show();
 
-
-            if (android.os.Build.VERSION.SDK_INT >= android.os.Build.VERSION_CODES.M) {
-
-
-                int permissionCheck = getApplicationContext().checkSelfPermission(Manifest.permission.READ_EXTERNAL_STORAGE);
-                permissionCheck = getApplicationContext().checkSelfPermission(Manifest.permission.WRITE_EXTERNAL_STORAGE);
-                permissionCheck = getApplicationContext().checkCallingOrSelfPermission("android.permission.READ_EXTERNAL_STORAGE");
-                permissionCheck = getApplicationContext().checkCallingOrSelfUriPermission(selectedImage,Intent.FLAG_GRANT_READ_URI_PERMISSION);
-                permissionCheck = getApplicationContext().checkCallingOrSelfUriPermission(Uri.parse(myJpgPath),Intent.FLAG_GRANT_READ_URI_PERMISSION);
+            }catch (Exception e){
+                Toast.makeText(ctx,"Erro ao abrir fotos",Toast.LENGTH_SHORT).show();
             }
 
-
-
-            /*
-            String wholeID = DocumentsContract.getDocumentId(selectedImage);
-            String id = wholeID.split(":")[1];
-            String sel = MediaStore.Images.Media._ID + "=?";
-            Cursor cursor = getContentResolver().query(MediaStore.Images.Media.EXTERNAL_CONTENT_URI,
-                    filePathColumn, sel, new String[]{ id }, null);
-            String filePath = "";
-            int columnIndex = cursor.getColumnIndex(filePathColumn[0]);
-            if (cursor.moveToFirst()) {
-                filePath = cursor.getString(columnIndex);
-            }
-            cursor.close();
-*/
-
-
-
-            System.out.println("FilePath--"+selectedImage.toString());
-            System.out.println("FilePathb--"+filePathColumn[0]);
-
-            //Cursor cursor = getContentResolver().query(selectedImage, filePathColumn, null, null, null);
-            Cursor cursor = getContentResolver().query(selectedImage, null, null, null, null);
-
-
-            if (!cursor.moveToFirst()){System.out.println("Cursor Vazio");}
-
-
-            System.out.println("FilePathw--"+cursor.getColumnName(0));
-            System.out.println("FilePathw--"+cursor.getColumnName(1));
-            System.out.println("FilePathw--"+cursor.getColumnName(2));
-            System.out.println("FilePathw--"+cursor.getColumnName(3));
-            System.out.println("FilePathw--"+cursor.getColumnName(4));
-            System.out.println("FilePathw--"+cursor.getColumnName(5));
-
-            System.out.println("FilePath2--"+cursor.getString(0));
-            System.out.println("FilePath2--"+cursor.getString(1));
-            System.out.println("FilePath2--"+cursor.getString(2));
-            System.out.println("FilePath2--"+cursor.getString(3));
-            System.out.println("FilePath2--"+cursor.getString(4));
-            System.out.println("FilePath2--"+cursor.getString(5));
-
-            /*
-            int columnIndex = cursor.getColumnIndex(filePathColumn[0]);
-
-            System.out.println("FilePath3--"+columnIndex);
-
-            String filePath = cursor.getString(columnIndex);
-            cursor.close();
-
-            System.out.println("FilePath4--"+filePath);
-*/
-
-
-            //String a = Environment.getExternalStorageDirectory() + "/" + Environment.DIRECTORY_DCIM + "/";
-            //String a = Environment.getExternalStoragePublicDirectory(Environment.DIRECTORY_PICTURES).getAbs‌​olutePath();;
-
-
-
-            Bitmap image = BitmapFactory.decodeFile(myJpgPath);
-            System.out.println(image.toString());
+            //System.out.println(image.toString());
             //Bitmap image = BitmapFactory.decodeFile("com.android.providers.media.documents/document/image%3A38");
 
             /*

@@ -22,6 +22,7 @@ import android.widget.ImageView;
 
 import com.nearbysocialevents.nearby975.MySql.dbMySQL;
 import com.nearbysocialevents.nearby975.R;
+import com.nearbysocialevents.nearby975.UsuarioSingleton;
 
 /**
  * Created by BalaPC on 03-Jun-16.
@@ -72,7 +73,7 @@ public class UpdateMySql extends AsyncTask<String, Void, Integer> {
 
     /////////////////////////////////////////////////////////////////
 
-    static public void sendPicture(Bitmap bitmap){
+    static public void sendPicture(Bitmap bitmap, int event_id){
         //Bitmap bitmap = BitmapFactory.decodeResource(getResources(),R.drawable.ic_launcher);
         //Resources res = getContext().getResources();
         //Bitmap bitmap = BitmapFactory.decodeResource(bitmap2, R.drawable.cadastro);
@@ -82,7 +83,7 @@ public class UpdateMySql extends AsyncTask<String, Void, Integer> {
         bitmap.compress(Bitmap.CompressFormat.PNG, 90, stream); //compress to which format you want.
         byte [] byte_arr = stream.toByteArray();
         String image_str = Base64.encodeToString(byte_arr, Base64.DEFAULT);
-        enviaImagemServidor(image_str);
+        enviaImagemServidor(image_str,Integer.toString(event_id));
     }
 
     static public Bitmap foto;
@@ -95,8 +96,8 @@ public class UpdateMySql extends AsyncTask<String, Void, Integer> {
         job1 = new SendMySql(){
             @Override
             public void naResposta(ResultSet result) throws SQLException {
-                if(result.next()) {
-                    result.first();
+                while(result.next()) {
+
                     //UpdateMySql tmp = new UpdateMySql();
                     System.out.println("Foto recebida");
                     String imagem = result.getString("foto");
@@ -105,8 +106,6 @@ public class UpdateMySql extends AsyncTask<String, Void, Integer> {
                     UpdateMySql.foto = bitmap;
                     tmp.recebeImagem(bitmap);
                     System.out.println("Imagem Recebida e convertida em bitmap");
-                }else{
-                    System.out.println("Foto não recebida");
                 }
             }
         };
@@ -124,7 +123,7 @@ public class UpdateMySql extends AsyncTask<String, Void, Integer> {
     }
 
 
-    static private boolean enviaImagemServidor(String img){
+    static private boolean enviaImagemServidor(String img, String event_id){
         UpdateMySql job2;
         job2 = new UpdateMySql(){
             @Override
@@ -136,9 +135,11 @@ public class UpdateMySql extends AsyncTask<String, Void, Integer> {
                 }
             }
         };
-
-        String sql = "INSERT INTO fotos  (`dono`,`foto`) VALUES ('" +
-                "Felipe"+
+        UsuarioSingleton user = UsuarioSingleton.getInstance();
+        String sql = "INSERT INTO fotos  (`dono`,`evento_id`,`foto`) VALUES ('" +
+                user.getUsuario()+
+                "','" +
+                event_id +
                 "','" +
                 img +
                 "')";

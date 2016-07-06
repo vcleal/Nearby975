@@ -36,7 +36,7 @@ public class ActivityCriarEvento extends Activity {
 
 
     //TODO: validar formulario
-    //TODO: FEITO conectar com o servidor.
+
     /**
      * Validacao do formulario
      * @return
@@ -72,7 +72,7 @@ public class ActivityCriarEvento extends Activity {
         String sql = "INSERT INTO eventos  (`nome_evento`,`nome_dono`,`data_dia`,`data_hora`,`preco`,`local`,`descricao` ) VALUES ('" +
                 edtNomeEvento.getText().toString()+
                 "','" +
-                user.getNome() +
+                user.getUsuario() +
                 "','" +
                 edtDataEvento.getText().toString() +
                 "','" +

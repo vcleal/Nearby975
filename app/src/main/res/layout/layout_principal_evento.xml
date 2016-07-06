@@ -3,11 +3,7 @@
     android:orientation="vertical" android:layout_width="match_parent"
     android:layout_height="match_parent">
 
-    <RatingBar
-        android:layout_width="wrap_content"
-        android:layout_height="wrap_content"
-        android:id="@+id/ratingBar"
-        android:layout_gravity="center_horizontal" />
+
 
     <TextView
         android:layout_width="wrap_content"
@@ -66,7 +62,35 @@
             android:textSize="15dp"
             android:text="R$25,00"
             android:id="@+id/preco" />
+
+
     </LinearLayout>
+    <LinearLayout
+        android:orientation="horizontal"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content">
+        <TextView
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_margin="5dp"
+            android:textSize="15dp"
+            android:text=" Voce possui "
+            android:id="@+id/txtinfoingresso" />
+        <TextView
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_margin="5dp"
+            android:textSize="15dp"
+            android:text="XX"
+            android:id="@+id/txt_num_ingressos" />
+        <TextView
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_margin="5dp"
+            android:textSize="15dp"
+            android:text="ingressos"
+            android:id="@+id/txtinfoingresso2" />
+        </LinearLayout>
 
     <View
     android:layout_width="match_parent"
@@ -83,6 +107,34 @@
             android:orientation="vertical"
             android:layout_width="match_parent"
             android:layout_height="match_parent">
+
+            <LinearLayout
+                android:orientation="horizontal"
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content">
+                <TextView
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:layout_margin="5dp"
+                    android:textSize="15dp"
+                    android:text="  "
+                    android:id="@+id/spacer" />
+                <TextView
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:layout_margin="5dp"
+                    android:textSize="15dp"
+                    android:text="00"
+                    android:id="@+id/num_amigos" />
+                <TextView
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:layout_margin="5dp"
+                    android:textSize="15dp"
+                    android:text="amigos comparam ingressos"
+                    android:id="@+id/txtinfoamigos" />
+
+            </LinearLayout>
 
             <TextView
                 android:layout_width="wrap_content"

@@ -91,14 +91,7 @@
                 android:id="@+id/descricaoEvento"
                 android:layout_gravity="center_horizontal" />
 
-            <Spinner
-                android:layout_width="match_parent"
-                android:layout_height="50dp"
-                android:layout_margin="2dp"
-                android:gravity="center"
-                android:id="@+id/spinner_categoria_evento"
-                android:entries="@array/array_categoria_evento"
-                android:layout_gravity="center_horizontal" />
+
 
             <Button
                 android:layout_width="wrap_content"
@@ -107,13 +100,7 @@
                 android:layout_margin="2dp"
                 android:id="@+id/button_def_atendente"
                 android:layout_gravity="center_horizontal" />
-            <Button
-                android:layout_width="wrap_content"
-                android:layout_height="wrap_content"
-                android:text="Validar Ingressos"
-                android:layout_margin="2dp"
-                android:id="@+id/button_validar_ingressos"
-                android:layout_gravity="center_horizontal" />
+
             <Button
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"

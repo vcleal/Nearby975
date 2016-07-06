@@ -14,6 +14,7 @@ import com.nearbysocialevents.nearby975.MySql.UpdateMySql;
 
 import java.sql.ResultSet;
 import java.sql.SQLException;
+import java.text.SimpleDateFormat;
 import java.util.ArrayList;
 import java.util.Date;
 
@@ -37,14 +38,41 @@ public class ActivityBuscarEvento extends Activity {
             @Override
             public void naResposta(ResultSet result) throws SQLException {
                 //result.first();
+                int id;
+                Date data;
+                String nome_evento;
+                Long preco_evento;
+                String local_evento;
+                String owner;
+                String descricao_evento;
+                eventos = new ArrayList<Evento>();
+
+                SimpleDateFormat dateFormat = new SimpleDateFormat("dd/MM/yyyy HH:mm");
+                Evento event;
                 while(result.next()){
-                    eventos.add(new Evento(result.getString("nome_evento"), Double.valueOf(result.getString("preco")), new Date() ));
-                    Log.i("MYSQL", "Resultado: " + result.getString("nome_evento"));
+                    try{
+                        id = result.getInt("id");
+                        data = dateFormat.parse(result.getString("data_dia").toString()+" "+result.getString("data_hora").toString());
+                        nome_evento = result.getString("nome_evento").toString();
+                        preco_evento = result.getLong("preco");
+                        local_evento = result.getString("local").toString();
+                        descricao_evento = result.getString("descricao").toString();
+                        owner = result.getString("nome_dono").toString();
+                        event = new Evento(id,nome_evento,preco_evento,data,local_evento,descricao_evento,owner);
+                        eventos.add(event);
+
+
+                    }catch (Exception e){
+
+                    }
                 }
+                mAdapter = new MyListAdapter(ctx, eventos);
+                list.setAdapter(mAdapter);
+                mAdapter.notifyDataSetChanged();
             }
         };
 
-        String sql = "SELECT * FROM eventos WHERE 1";
+        String sql = "SELECT * FROM eventos WHERE nome_evento LIKE '%"+busca.getText().toString()+"%'";
 
         job1.execute(sql);
 
@@ -82,14 +110,10 @@ public class ActivityBuscarEvento extends Activity {
 
             @Override
             public void afterTextChanged(Editable s) {
-               // eventos = new ArrayList<Evento>();
-                String conteudoDaBusca = busca.getText().toString();
-                //TODO: FEITO - popular eventos com itens que contenham 'conteudoDaBusca'
-                //TODO: corrigir a forma como os eventos são mostrados.
-                //eventos.add(new Evento("0014","Evento 2",(float)i,new Date(),30));
-                // eventos.add(new Evento("Casa da Joana Funck", 20.0, new Date() ));
-                // eventos.add(new Evento("Casa da Joana Funck 2", 25.0, new Date() ));
-                //----------------------
+
+
+                buscarEventosNoServidor();
+
 
                 mAdapter = new MyListAdapter(ctx, eventos);
                 list.setAdapter(mAdapter);

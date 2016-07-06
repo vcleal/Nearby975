@@ -7,10 +7,12 @@ import android.graphics.Bitmap;
  */
 public class Usuario {
     public String nome;
+    public String mail;
     public Bitmap foto;
 
-    public Usuario(String name){
+    public Usuario(String name, String email){
         this.nome = name;
+        this.mail = email;
     }
 
 

@@ -11,11 +11,11 @@ import java.util.List;
 public class Evento implements Serializable{
     public String nome;
 
-    public String getId() {
+    public int getId() {
         return id;
     }
 
-    private String id;
+    public int id;
 
 
 
@@ -57,7 +57,8 @@ public class Evento implements Serializable{
 
 
     //TODO: Arrumar este construtor ou fazer outros
-    public Evento(String id,String nome2, float preco2, Date data2, float distancia2){
+    public Evento(int id2,String nome2, float preco2, Date data2, float distancia2){
+        this.id = id2;
         nome=nome2;
         preco = preco2;
         data=data2;
@@ -70,8 +71,9 @@ public class Evento implements Serializable{
 
     }
 
-    public Evento(String id,String nome2, float preco2, Date data2, String local2,String descricao2,String dono){
+    public Evento(int id2,String nome2, float preco2, Date data2, String local2,String descricao2,String dono){
         nome=nome2;
+        this.id = id2;
         preco = preco2;
         data=data2;
         descricao = descricao2;

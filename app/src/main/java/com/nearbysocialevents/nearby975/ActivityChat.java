@@ -19,13 +19,15 @@ import java.sql.SQLException;
  */
 public class ActivityChat extends Activity {
 
+
     TextView corpoChat;
     EditText newMessage;
     Button sendButton;
 
+
     private UsuarioSingleton user = UsuarioSingleton.getInstance();
 
-    //TODO: criar alocação do id_evento com o evento que a ActivityChat, necessita da lista de eventos pronta.
+
     String id_evento = "5";
 
     SendMySql job1;
@@ -64,6 +66,7 @@ public class ActivityChat extends Activity {
             public void naResposta(Integer result) throws SQLException {
                 if(result > 0) {
                     corpoChat.append(user.getNome()+": "+ newMessage.getText().toString() +"\n");
+                    newMessage.setText("");
                 }else{
                     chamaToast("Ocorreu um erro !!! Tente de novo");
                 }
@@ -73,7 +76,7 @@ public class ActivityChat extends Activity {
         String sql = "INSERT INTO chat  (`autor`,`nome_evento`,`id_evento`,`mensagem`) VALUES ('" +
                 user.getNome()+
                 "','" +
-                "EventoPadrao" + //TODO: corrigir isso com o nome do evento ou retirar do db.
+                nome_festa+
                 "','" +
                 id_evento +
                 "','" +
@@ -90,8 +93,8 @@ public class ActivityChat extends Activity {
 
 
 
-
-
+    TextView titulo_chat;
+    String nome_festa;
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
@@ -99,11 +102,14 @@ public class ActivityChat extends Activity {
         corpoChat = (TextView)findViewById(R.id.corpo_chat);
         newMessage = (EditText)findViewById(R.id.edt_chat_message);
         sendButton = (Button)findViewById(R.id.btn_enviar_chat);
-
+        titulo_chat= (TextView)findViewById(R.id.titulo_chat);
+        nome_festa = getIntent().getStringExtra("evento_nome");
+        titulo_chat.setText("Chat de "+nome_festa);
+        id_evento = Integer.toString(getIntent().getIntExtra("evento_id",0));
         //user = UsuarioSingleton.getInstance();
 
         buscaMensagens();
-        //TODO:FEITO preencher chat
+
 
 
 
@@ -113,8 +119,9 @@ public class ActivityChat extends Activity {
 
                 //UsuarioSingleton user = UsuarioSingleton.getInstance();
                 //String mensage = user.getUsuario() + ": " +newMessage.getText().toString()+"\n";
-                //TODO:FEITO criar mensagem e enviar ao servidor.
+
                 enviaMensagemServidor();
+                Toast.makeText(v.getContext(), "Enviando mensagem...", Toast.LENGTH_SHORT).show();
 
             }
         });

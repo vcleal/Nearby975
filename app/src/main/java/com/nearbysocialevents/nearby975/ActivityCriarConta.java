@@ -51,15 +51,14 @@ public class ActivityCriarConta extends Activity{
         }
     }
 
-//TODO  validar string com data de nascimento
-//TODO: FEITO  Conectar com o servidor.
+
     private boolean validaData(){
         return true;
     }
 
 
 
-    boolean isdebugging = true;
+    private boolean isdebugging = false;
     /**
      * Testa se o formulario esta preenchido
      * @return
@@ -70,10 +69,13 @@ public class ActivityCriarConta extends Activity{
             Toast.makeText(this, "Nome Invalido", Toast.LENGTH_SHORT).show();
             return false;
         }
-        if(!isValidEmail(txtMail.getText().toString())){
-            Toast.makeText(this, "E-mail Invalido", Toast.LENGTH_SHORT).show();
-            return false;
+        if(!isEditing){
+            if(!isValidEmail(txtMail.getText().toString())){
+                Toast.makeText(this, "E-mail Invalido", Toast.LENGTH_SHORT).show();
+                return false;
+            }
         }
+
         if(txtPwd.getText().toString().isEmpty()){
             Toast.makeText(this, "Insira uma senha", Toast.LENGTH_SHORT).show();
             return false;
@@ -107,6 +109,34 @@ public class ActivityCriarConta extends Activity{
     /**
      * Este método busca no servidor se o email inserido já foi tomado e se não prossegue com o cadastro
      */
+
+    UpdateMySql job3;
+    private void alterarDados(){
+
+
+        job3 = new UpdateMySql(){
+            @Override
+            public void naResposta(Integer result) throws SQLException {
+                if(result > 0) {
+                    chamaToast("Dados atualizados com sucesso!");
+                    finish();
+                }else{
+                    chamaToast("Ocorreu um erro! Tente novamente");
+                }
+            }
+        };
+
+        String sql = "UPDATE usuario  SET `nome` = '"+txtNome.getText().toString()+"',`senha` = '"+txtPwd.getText().toString()+"',`telefone` = '"+txtPhone.getText().toString()+"',`data_nascimento` = '"+ txtBirthDate.getText().toString()+"' " +
+                "WHERE email = '"+UsuarioSingleton.getInstance().getUsuario()+"'";
+
+
+        job3.execute(sql);
+
+        System.out.println("Conta_Alterada");
+
+        return;
+    }
+
 
     SendMySql job1;
     private boolean verificaEmailServidor(){
@@ -174,13 +204,15 @@ public class ActivityCriarConta extends Activity{
     }
 
 
-
+    private boolean isEditing;
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.layout_cadastro);
         txtNome = (EditText) findViewById(R.id.text_nome);
         ctx = this.getApplicationContext();
+        isEditing = getIntent().getBooleanExtra("is_editing",false);
+
 
         txtMail = (EditText) findViewById(R.id.text_email);
         txtPwd = (EditText) findViewById(R.id.text_pwd);
@@ -189,14 +221,27 @@ public class ActivityCriarConta extends Activity{
         txtBirthDate = (EditText) findViewById(R.id.text_birth);
         spnSexo = (Spinner) findViewById(R.id.spinner_sexo_cadastro);
         buttonConfirm = (Button) findViewById(R.id.button_conf_cadastro);
-
+        if(isEditing){
+            /**
+             * nao pode editar email
+             */
+            txtMail.setVisibility(View.GONE);
+            txtMail.setEnabled(false);
+        }
         buttonConfirm.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
                 if(isFilled()){
+                    if(isEditing){
+                        /**
+                         * Se esta editando, muda a query SQL para update
+                         */
+                        alterarDados();
+                    }else{
+                        verificaEmailServidor();
+                        //enviaCadastroServidor();
 
-                    verificaEmailServidor();
-                    //enviaCadastroServidor();
+                    }
 
 
                 }else{

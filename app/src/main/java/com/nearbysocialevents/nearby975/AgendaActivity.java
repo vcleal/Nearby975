@@ -50,7 +50,7 @@ public class AgendaActivity extends Activity {
                     Toast.makeText(ctx,"Erro - Verifique sua conexao com a internet.",Toast.LENGTH_LONG).show();
                     return;
                 }else{
-                    String id;
+                    int id;
                     Date data;
                     String nome_evento;
                     Long preco_evento;
@@ -62,7 +62,7 @@ public class AgendaActivity extends Activity {
                     Evento event;
                     do{
                         try{
-                            id = result.getString("id").toString();
+                            id = result.getInt("id");
                             data = dateFormat.parse(result.getString("data_dia").toString()+" "+result.getString("data_hora").toString());
                             nome_evento = result.getString("nome_evento").toString();
                             preco_evento = result.getLong("preco");
@@ -100,7 +100,7 @@ public class AgendaActivity extends Activity {
 
 
 
-        Toast.makeText(this,"Atualizando Agenda...",Toast.LENGTH_LONG);
+        Toast.makeText(this,"Atualizando Agenda...",Toast.LENGTH_LONG).show();
 
 
 
